@@ -20,7 +20,15 @@ body::before{
   position:fixed;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.65);
+  z-index:-1;
+}
+
+/* PARTICLES */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
   z-index:-1;
 }
 
@@ -41,17 +49,16 @@ body::before{
   min-height:100vh;
   padding:40px;
   text-align:center;
-  animation:fade 0.4s;
+  animation:fade 0.5s;
 }
-
 .page.active{display:block;}
 
 @keyframes fade{
-  from{opacity:0;transform:translateY(10px);}
+  from{opacity:0; transform:translateY(20px);}
   to{opacity:1;}
 }
 
-/* home */
+/* HOME */
 #home{
   display:flex;
   flex-direction:column;
@@ -60,11 +67,22 @@ body::before{
 }
 
 .logo{
-  font-size:90px;
+  font-size:100px;
   font-weight:900;
   background:linear-gradient(90deg,#22c55e,#4ade80,#22c55e);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
+  animation:glow 2s infinite alternate, float 3s infinite alternate;
+}
+
+@keyframes glow{
+  from{ text-shadow:0 0 10px #22c55e;}
+  to{ text-shadow:0 0 60px #4ade80;}
+}
+
+@keyframes float{
+  from{ transform:translateY(0);}
+  to{ transform:translateY(-15px);}
 }
 
 /* buttons */
@@ -73,13 +91,13 @@ body::before{
   margin:10px;
   background:#22c55e;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
   cursor:pointer;
   transition:.3s;
 }
 .btn:hover{
   transform:scale(1.1);
-  box-shadow:0 0 20px #22c55e;
+  box-shadow:0 0 25px #22c55e;
 }
 
 /* back */
@@ -94,19 +112,20 @@ body::before{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
-  gap:25px;
+  gap:30px;
 }
 
 .card{
-  background:rgba(255,255,255,0.05);
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(15px);
   padding:20px;
   border-radius:15px;
   width:260px;
-  transition:.3s;
+  transition:.4s;
 }
 .card:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 30px #22c55e;
+  transform:scale(1.08) rotateX(5deg) rotateY(5deg);
+  box-shadow:0 0 60px #22c55e;
 }
 .card img{width:100%;}
 
@@ -136,31 +155,32 @@ body::before{
 
 <body>
 
+<canvas id="particles"></canvas>
 <div id="cursor"></div>
 
 <!-- HOME -->
 <div id="home" class="page active">
 <h1 class="logo">LEORIXMC</h1>
 
-<button class="btn" onclick="go('ranks')">RANKS</button>
-<button class="btn" onclick="go('coins')">COINS</button>
-<button class="btn" onclick="go('tags')">TAGS</button>
+<button class="btn" onclick="playClick(); go('ranks')">RANKS</button>
+<button class="btn" onclick="playClick(); go('coins')">COINS</button>
+<button class="btn" onclick="playClick(); go('tags')">TAGS</button>
 </div>
 
 <!-- RANKS -->
 <div id="ranks" class="page">
-<button class="btn back" onclick="go('home')">⬅ Back</button>
+<button class="btn back" onclick="playClick(); go('home')">⬅ Back</button>
 
 <div class="container">
-<div class="card"><img src="prime.png"><h3>Prime ₹119</h3><button class="btn" onclick="openRank('Prime')">View</button><button class="btn">Buy</button></div>
-<div class="card"><img src="mythic.png"><h3>Mythic ₹249</h3><button class="btn" onclick="openRank('Mythic')">View</button><button class="btn">Buy</button></div>
-<div class="card"><img src="leorix.png"><h3>Leorix+ ₹499</h3><button class="btn" onclick="openRank('Leorix')">View</button><button class="btn">Buy</button></div>
+<div class="card"><img src="prime.png"><h3>Prime ₹119</h3><button class="btn" onclick="playClick(); openRank('Prime')">View</button><button class="btn" onclick="playClick()">Buy</button></div>
+<div class="card"><img src="mythic.png"><h3>Mythic ₹249</h3><button class="btn" onclick="playClick(); openRank('Mythic')">View</button><button class="btn" onclick="playClick()">Buy</button></div>
+<div class="card"><img src="leorix.png"><h3>Leorix+ ₹499</h3><button class="btn" onclick="playClick(); openRank('Leorix')">View</button><button class="btn" onclick="playClick()">Buy</button></div>
 </div>
 </div>
 
 <!-- COINS -->
 <div id="coins" class="page">
-<button class="btn back" onclick="go('home')">⬅ Back</button>
+<button class="btn back" onclick="playClick(); go('home')">⬅ Back</button>
 
 <div class="container">
 <div class="card"><img src="coin1.png"><h3>400 Coins</h3><p>₹99</p></div>
@@ -173,7 +193,7 @@ body::before{
 
 <!-- TAGS -->
 <div id="tags" class="page">
-<button class="btn back" onclick="go('home')">⬅ Back</button>
+<button class="btn back" onclick="playClick(); go('home')">⬅ Back</button>
 
 <div class="container">
 <div class="card"><img src="toy.png"><h3>TOY</h3><p>200 Coins</p></div>
@@ -187,8 +207,8 @@ body::before{
 <div class="box">
 <h2 id="title"></h2>
 <div id="content"></div>
-<p style="margin-top:10px;color:#4ade80;"><b>Available every 15 days</b></p>
-<button class="btn" onclick="closePopup()">Close</button>
+<p style="color:#4ade80;"><b>Available every 15 days</b></p>
+<button class="btn" onclick="playClick(); closePopup()">Close</button>
 </div>
 </div>
 
@@ -202,7 +222,13 @@ function go(id){
   document.getElementById(id).classList.add('active');
 }
 
-/* popup FULL DATA */
+/* sound */
+function playClick(){
+  let s=document.getElementById("clickSound");
+  if(s){s.currentTime=0;s.play().catch(()=>{});}
+}
+
+/* FULL DATA */
 function openRank(name){
   popup.style.display="flex";
 
@@ -277,20 +303,37 @@ function closePopup(){
   popup.style.display="none";
 }
 
-/* SOUND FOR ALL BUTTONS */
-function playClick(){
-  let s=document.getElementById("clickSound");
-  if(s){s.currentTime=0;s.play().catch(()=>{});}
-}
-document.querySelectorAll("button").forEach(btn=>{
-  btn.addEventListener("click", playClick);
-});
-
 /* cursor */
 document.addEventListener("mousemove",(e)=>{
   cursor.style.left=e.clientX+"px";
   cursor.style.top=e.clientY+"px";
 });
+
+/* PARTICLES */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<80;i++){
+  particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height});
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="#22c55e";
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,2,0,Math.PI*2);
+    ctx.fill();
+    p.y+=0.5;
+    if(p.y>canvas.height)p.y=0;
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
 </script>
 
 </body>
