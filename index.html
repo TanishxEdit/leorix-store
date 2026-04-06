@@ -1,1 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeorixMC Store</title>
 
+<style>
+body {
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:#0f172a;
+  color:white;
+  text-align:center;
+}
+
+.banner {
+  background:linear-gradient(90deg, red, orange);
+  padding:10px;
+  font-weight:bold;
+}
+
+h1 { margin:20px; }
+
+.container {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:20px;
+  padding:20px;
+}
+
+.card {
+  background:#1e293b;
+  padding:15px;
+  border-radius:15px;
+  width:300px;
+  box-shadow:0 0 15px rgba(0,0,0,0.5);
+  transition:0.3s;
+}
+
+.card:hover {
+  transform:scale(1.05);
+}
+
+.popular {
+  border:2px solid gold;
+  box-shadow:0 0 20px gold;
+}
+
+img {
+  width:100%;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+button {
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#22c55e;
+  color:white;
+  cursor:pointer;
+  width:100%;
+}
+
+button:hover {
+  background:#16a34a;
+}
+
+input {
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  width:250px;
+}
+
+.section-title {
+  margin-top:30px;
+  font-size:24px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="banner">🔥 40% OFF SALE - LIMITED TIME 🔥</div>
+
+<h1>LeorixMC Store</h1>
+<p>⚔️ Upgrade your rank. Unlock kits. Dominate the server. 👑</p>
+
+<!-- LOGIN -->
+<div id="login">
+  <h2>Enter Username</h2>
+  <input id="username" placeholder="Minecraft Username"><br><br>
+  <button onclick="playClick(); login()">Login</button>
+</div>
+
+<!-- STORE -->
+<div id="store" style="display:none;">
+
+<h2 class="section-title">💎 Ranks</h2>
+
+<div class="container">
+
+<div class="card">
+<img src="prime.png">
+<h3>⭐ Prime - ₹119</h3>
+<p>Prot IV Diamond Gear<br>Golden Apples x32<br>Totem x2</p>
+<button onclick="playClick()">Buy</button>
+</div>
+
+<div class="card popular">
+<img src="mythic.png">
+<h3>🔥 Mythic - ₹249</h3>
+<p>Netherite Gear<br>Golden Apples x64<br>Crystals x32</p>
+<button onclick="playClick()">Buy</button>
+</div>
+
+<div class="card">
+<img src="leorix.png">
+<h3>👑 Leorix+ - ₹499</h3>
+<p>Max Netherite Gear<br>Golden Apples x64<br>Crystals x64</p>
+<button onclick="playClick()">Buy</button>
+</div>
+
+</div>
+
+<h2 class="section-title">🪙 Coins</h2>
+
+<div class="container">
+
+<div class="card">
+<img src="coin1.png">
+<h3>400 Coins</h3>
+<p>₹99</p>
+<button onclick="playClick()">Buy</button>
+</div>
+
+<div class="card popular">
+<img src="coin2.png">
+<h3>900 Coins</h3>
+<p>₹199</p>
+<button onclick="playClick()">Buy</button>
+</div>
+
+<div class="card">
+<img src="coin3.png">
+<h3>1500 Coins</h3>
+<p>₹299</p>
+<button onclick="playClick()">Buy</button>
+</div>
+
+<div class="card">
+<img src="coin4.png">
+<h3>2000 Coins</h3>
+<p>₹399</p>
+<button onclick="playClick()">Buy</button>
+</div>
+
+<div class="card">
+<img src="coin5.png">
+<h3>2700 Coins</h3>
+<p>₹499</p>
+<button onclick="playClick()">Buy</button>
+</div>
+
+</div>
+
+<h2 class="section-title">🎨 Tags</h2>
+
+<div class="container">
+
+<div class="card">
+<h3 style="color:yellow;">TOY</h3>
+<button onclick="playClick()">Buy</button>
+</div>
+
+<div class="card">
+<h3 style="color:pink;">MEOW</h3>
+<button onclick="playClick()">Buy</button>
+</div>
+
+<div class="card popular">
+<h3 style="color:red;">DEADLY</h3>
+<button onclick="playClick()">Buy</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- SOUND -->
+<audio id="clickSound" src="click.mp3"></audio>
+
+<script>
+function login(){
+  let user=document.getElementById("username").value;
+  if(user===""){
+    alert("Enter username!");
+    return;
+  }
+  document.getElementById("login").style.display="none";
+  document.getElementById("store").style.display="block";
+}
+
+function playClick(){
+  let s=document.getElementById("clickSound");
+  s.currentTime=0;
+  s.play();
+}
+</script>
+
+</body>
+</html>
