@@ -5,8 +5,9 @@
 <title>LeorixMC Store</title>
 
 <style>
-html,body{
+html, body {
   margin:0;
+  padding:0;
   height:100%;
   font-family:Segoe UI;
   background:url('bg.png') no-repeat center center fixed;
@@ -15,23 +16,25 @@ html,body{
 }
 
 /* overlay */
-.overlay{
+.overlay {
   position:fixed;
+  top:0;
+  left:0;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.65);
   z-index:-1;
 }
 
 /* nav */
-.navbar{
+.navbar {
   display:flex;
   justify-content:space-between;
   padding:20px;
   background:rgba(0,0,0,0.5);
 }
 
-.navbar button{
+.navbar button {
   background:none;
   border:none;
   color:white;
@@ -40,18 +43,18 @@ html,body{
 }
 
 /* sections */
-.section{display:none;padding:20px;}
-.active{display:block;}
+.section { display:none; padding:20px; }
+.section.active { display:block; }
 
 /* cards */
-.container{
+.container {
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
   gap:20px;
 }
 
-.card{
+.card {
   background:rgba(255,255,255,0.05);
   padding:20px;
   border-radius:15px;
@@ -59,10 +62,10 @@ html,body{
   text-align:center;
 }
 
-.card img{width:100%;}
+.card img { width:100%; }
 
 /* button */
-.btn{
+.btn {
   margin-top:10px;
   padding:10px;
   width:100%;
@@ -73,9 +76,11 @@ html,body{
 }
 
 /* popup */
-.popup{
+.popup {
   display:none;
   position:fixed;
+  top:0;
+  left:0;
   width:100%;
   height:100%;
   background:rgba(0,0,0,0.9);
@@ -83,41 +88,30 @@ html,body{
   align-items:center;
 }
 
-.box{
+.box {
   background:#1e293b;
   padding:20px;
+  border-radius:10px;
   width:500px;
   max-height:80vh;
   overflow-y:auto;
-  border-radius:10px;
 }
 
-.box h3{
-  color:#22c55e;
-}
-
-/* snow */
-#snow{
-  position:fixed;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-}
+.box h3 { color:#22c55e; }
 </style>
 </head>
 
 <body>
 
 <div class="overlay"></div>
-<canvas id="snow"></canvas>
 
 <!-- NAV -->
 <div class="navbar">
   <div>LeorixMC</div>
   <div>
-    <button onclick="show('ranks')">Ranks</button>
-    <button onclick="show('coins')">Coins</button>
-    <button onclick="show('tags')">Tags</button>
+    <button onclick="showSection('ranks')">Ranks</button>
+    <button onclick="showSection('coins')">Coins</button>
+    <button onclick="showSection('tags')">Tags</button>
   </div>
 </div>
 
@@ -184,143 +178,109 @@ html,body{
 
 /* SOUND */
 function playClick(){
-  let s=document.getElementById("clickSound");
-  if(s){
-    s.currentTime=0;
-    s.play().catch(()=>{});
-  }
+  const s = document.getElementById("clickSound");
+  if(s){ s.currentTime=0; s.play().catch(()=>{}); }
 }
 
 /* NAV */
-function show(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+function showSection(id){
+  document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-/* POPUP */
+/* POPUP DATA */
 function openRank(name){
-  const popup=document.getElementById("popup");
-  const title=document.getElementById("title");
-  const content=document.getElementById("content");
+  const popup = document.getElementById("popup");
+  const title = document.getElementById("title");
+  const content = document.getElementById("content");
 
-  popup.style.display="flex";
+  popup.style.display = "flex";
 
   if(name==="Prime"){
     title.innerText="⭐ PRIME - ₹119";
-    content.innerHTML=`
-    <h3>✔ Perks</h3>
-    ✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 3
+    content.innerHTML = `<h3>✔ Perks</h3>
+✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 3
 
-    <h3>⚔ Kit (15 Day Cooldown)</h3>
-    Diamond Armour (Protection IV)<br>
-    Diamond Sword (Sharpness III)<br>
-    Diamond Pickaxe (Efficiency V)<br>
-    Diamond Axe (Efficiency V)<br>
-    Trident (Mending)<br>
-    Mace (Mending)<br>
-    Crossbow (QuickCharge, Multishot)<br>
+<h3>⚔ Kit</h3>
+Diamond Armour (Protection IV)<br>
+Diamond Sword (Sharpness III)<br>
+Diamond Pickaxe (Efficiency V)<br>
+Diamond Axe (Efficiency V)<br>
+Trident (Mending)<br>
+Mace (Mending)<br>
+Crossbow (QuickCharge, Multishot)<br>
 
-    <h3>🎒 Items</h3>
-    Bottle Of Enchanting (x64)<br>
-    Golden Carrot (x32)<br>
-    Golden Apple (x32)<br>
-    Enchanted Golden Apple (x10)<br>
-    EnderPearl (x16)<br>
-    Respawn Anchor (x16)<br>
-    GlowStone (x16)<br>
-    Obsidian (x16)<br>
-    Crystal (x16)<br>
-    Totem (x2)
-    `;
+<h3>🎒 Items</h3>
+Bottle Of Enchanting (x64)<br>
+Golden Carrot (x32)<br>
+Golden Apple (x32)<br>
+Enchanted Golden Apple (x10)<br>
+EnderPearl (x16)<br>
+Respawn Anchor (x16)<br>
+GlowStone (x16)<br>
+Obsidian (x16)<br>
+Crystal (x16)<br>
+Totem (x2)`;
   }
 
   if(name==="Mythic"){
     title.innerText="🔥 MYTHIC - ₹249";
-    content.innerHTML=`
-    <h3>✔ Perks</h3>
-    ✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 5
+    content.innerHTML = `<h3>✔ Perks</h3>
+✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 5
 
-    <h3>⚔ Kit (15 Day Cooldown)</h3>
-    Netherite Armour (Protection IV, Swift Sneak III, Soul Speed III)<br>
-    Netherite Sword (Maxed)<br>
-    Netherite Pickaxe (Silk Touch)<br>
-    Netherite Axe (Maxed)<br>
-    Trident (Riptide III)<br>
-    Mace (Wind Burst II)<br>
-    Crossbow (QuickCharge, Multishot)<br>
-    Bow (Infinity, Mending)<br>
+<h3>⚔ Kit</h3>
+Netherite Armour (Protection IV, Swift Sneak III, Soul Speed III)<br>
+Netherite Sword (Maxed)<br>
+Netherite Pickaxe (Silk Touch)<br>
+Netherite Axe (Maxed)<br>
+Trident (Riptide III)<br>
+Mace (Wind Burst II)<br>
+Crossbow (QuickCharge, Multishot)<br>
+Bow (Infinity, Mending)<br>
 
-    <h3>🎒 Items</h3>
-    Golden Carrot (x32)<br>
-    Golden Apple (x64)<br>
-    Enchanted Golden Apple (x10)<br>
-    EnderPearl (x16)<br>
-    Respawn Anchor (x32)<br>
-    GlowStone (x32)<br>
-    Obsidian (x32)<br>
-    Crystal (x32)<br>
-    Totem (x2)
-    `;
+<h3>🎒 Items</h3>
+Golden Carrot (x32)<br>
+Golden Apple (x64)<br>
+Enchanted Golden Apple (x10)<br>
+EnderPearl (x16)<br>
+Respawn Anchor (x32)<br>
+GlowStone (x32)<br>
+Obsidian (x32)<br>
+Crystal (x32)<br>
+Totem (x2)`;
   }
 
   if(name==="Leorix"){
     title.innerText="👑 LEORIX+ - ₹499";
-    content.innerHTML=`
-    <h3>✔ Perks</h3>
-    ✔ /pv 1<br>✔ /ec<br>✔ /craft<br>✔ /home 7
+    content.innerHTML = `<h3>✔ Perks</h3>
+✔ /pv 1<br>✔ /ec<br>✔ /craft<br>✔ /home 7
 
-    <h3>⚔ Ultimate Kit (15 Day Cooldown)</h3>
-    Netherite Armour (Protection VI, Swift Sneak III, Soul Speed III)<br>
-    Netherite Sword (Maxed)<br>
-    Netherite Pickaxe (Silk Touch)<br>
-    Netherite Axe (Maxed)<br>
-    Trident (Riptide III)<br>
-    Mace (Wind Burst III)<br>
-    Crossbow (QuickCharge, Multishot)<br>
-    Bow (Infinity, Mending)<br>
+<h3>⚔ Kit</h3>
+Netherite Armour (Protection VI, Swift Sneak III, Soul Speed III)<br>
+Netherite Sword (Maxed)<br>
+Netherite Pickaxe (Silk Touch)<br>
+Netherite Axe (Maxed)<br>
+Trident (Riptide III)<br>
+Mace (Wind Burst III)<br>
+Crossbow (QuickCharge, Multishot)<br>
+Bow (Infinity, Mending)<br>
 
-    <h3>🎒 OP Items</h3>
-    Golden Carrot (x64)<br>
-    Golden Apple (x64)<br>
-    Enchanted Golden Apple (x15)<br>
-    EnderPearl (x16)<br>
-    Respawn Anchor (x64)<br>
-    GlowStone (x64)<br>
-    Obsidian (x64)<br>
-    Crystal (x64)<br>
-    Totem (x2)
-    `;
+<h3>🎒 Items</h3>
+Golden Carrot (x64)<br>
+Golden Apple (x64)<br>
+Enchanted Golden Apple (x15)<br>
+EnderPearl (x16)<br>
+Respawn Anchor (x64)<br>
+GlowStone (x64)<br>
+Obsidian (x64)<br>
+Crystal (x64)<br>
+Totem (x2)`;
   }
 }
 
 function closePopup(){
   document.getElementById("popup").style.display="none";
 }
-
-/* SNOW */
-const c=document.getElementById("snow");
-const ctx=c.getContext("2d");
-c.width=window.innerWidth;
-c.height=window.innerHeight;
-
-let snow=[];
-for(let i=0;i<120;i++){
-  snow.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*3});
-}
-
-function draw(){
-  ctx.clearRect(0,0,c.width,c.height);
-  ctx.fillStyle="white";
-  snow.forEach(s=>{
-    ctx.beginPath();
-    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fill();
-    s.y+=1;
-    if(s.y>c.height)s.y=0;
-  });
-  requestAnimationFrame(draw);
-}
-draw();
 
 </script>
 
