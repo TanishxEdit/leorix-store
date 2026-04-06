@@ -7,76 +7,61 @@
 <style>
 body {
   margin:0;
-  font-family:Segoe UI;
+  font-family:'Segoe UI',sans-serif;
+  background:url('bg.png') center/cover fixed;
   color:white;
-  overflow-x:hidden;
-  transition:0.5s;
 }
 
-/* BACKGROUNDS */
-.home-bg { background:url('bg-home.jpg') center/cover fixed; }
-.coins-bg { background:url('bg-coins.jpg') center/cover fixed; }
-.tags-bg { background:url('bg-tags.jpg') center/cover fixed; }
-
-/* DARK OVERLAY */
+/* overlay */
 body::before {
   content:"";
   position:fixed;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.7);
   z-index:-1;
 }
 
-/* SNOW */
-#snow {
-  position:fixed;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  z-index:1;
-}
-
-/* HERO */
-.hero {
-  height:100vh;
+/* navbar */
+.navbar {
   display:flex;
-  flex-direction:column;
-  justify-content:center;
+  justify-content:space-between;
   align-items:center;
+  padding:20px 40px;
+  background:rgba(0,0,0,0.5);
+  backdrop-filter:blur(10px);
 }
 
-.logo { width:200px; }
+.logo { width:130px; }
 
-.enter {
-  margin-top:20px;
-  padding:15px 30px;
-  background:#22c55e;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-/* STORE */
-#store { display:none; padding:30px; }
-
-/* NAV */
-.nav { text-align:center; margin-bottom:30px; }
-.nav button {
-  margin:0 15px;
+.navbar button {
   background:none;
   border:none;
   color:white;
-  font-size:18px;
+  margin:0 10px;
+  font-size:16px;
   cursor:pointer;
 }
 
-/* CARDS */
+.navbar button:hover {
+  color:#22c55e;
+}
+
+/* hero */
+.hero {
+  text-align:center;
+  margin-top:50px;
+}
+
+.hero h1 { font-size:50px; }
+
+/* cards */
 .container {
   display:flex;
-  flex-wrap:wrap;
   justify-content:center;
+  flex-wrap:wrap;
   gap:25px;
+  margin-top:40px;
 }
 
 .card {
@@ -85,11 +70,24 @@ body::before {
   border-radius:20px;
   width:260px;
   text-align:center;
+  backdrop-filter:blur(10px);
+  transition:0.3s;
 }
 
-img { width:100%; border-radius:12px; }
+.card:hover {
+  transform:translateY(-10px);
+  box-shadow:0 0 20px #22c55e;
+}
 
-.buy {
+.popular { border:2px solid gold; }
+
+.card img {
+  width:100%;
+  border-radius:12px;
+}
+
+/* button */
+.btn {
   margin-top:10px;
   padding:12px;
   width:100%;
@@ -99,7 +97,11 @@ img { width:100%; border-radius:12px; }
   cursor:pointer;
 }
 
-/* POPUP */
+/* sections */
+.section { display:none; }
+.active { display:block; }
+
+/* popup */
 .popup {
   display:none;
   position:fixed;
@@ -110,9 +112,9 @@ img { width:100%; border-radius:12px; }
   align-items:center;
 }
 
-.box {
+.popup-box {
   background:#1e293b;
-  padding:25px;
+  padding:30px;
   border-radius:15px;
   width:500px;
   max-height:80vh;
@@ -120,56 +122,64 @@ img { width:100%; border-radius:12px; }
 }
 
 h3 { color:#22c55e; }
+
+/* snow */
+#snow {
+  position:fixed;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
 </style>
 </head>
 
-<body class="home-bg">
+<body>
 
 <canvas id="snow"></canvas>
 
-<!-- HERO -->
-<div class="hero">
+<!-- NAVBAR -->
+<div class="navbar">
   <img src="logo.png" class="logo">
-  <h1>LEORIXMC STORE</h1>
-  <button class="enter" onclick="enterStore()">ENTER STORE</button>
+  <div>
+    <button onclick="show('ranks')">Ranks</button>
+    <button onclick="show('coins')">Coins</button>
+    <button onclick="show('tags')">Tags</button>
+  </div>
 </div>
 
-<!-- STORE -->
-<div id="store">
-
-<div class="nav">
-  <button onclick="show('ranks')">Ranks</button>
-  <button onclick="show('coins')">Coins</button>
-  <button onclick="show('tags')">Tags</button>
+<!-- HERO -->
+<div class="hero">
+  <h1>LeorixMC Store</h1>
+  <p>Upgrade your gameplay</p>
 </div>
 
 <!-- RANKS -->
-<div id="ranks">
+<div id="ranks" class="section active">
 <div class="container">
 
 <div class="card">
 <img src="prime.png">
 <h3>Prime ₹119</h3>
-<button class="buy" onclick="openRank('Prime')">View</button>
+<button class="btn" onclick="openRank('Prime')">View</button>
 </div>
 
-<div class="card">
+<div class="card popular">
 <img src="mythic.png">
-<h3>Mythic ₹249</h3>
-<button class="buy" onclick="openRank('Mythic')">View</button>
+<h3>Mythic ₹249 ⭐</h3>
+<button class="btn" onclick="openRank('Mythic')">View</button>
 </div>
 
 <div class="card">
 <img src="leorix.png">
-<h3>Leorix+ ₹499</h3>
-<button class="buy" onclick="openRank('Leorix')">View</button>
+<h3>Leorix+ ₹499 👑</h3>
+<button class="btn" onclick="openRank('Leorix')">View</button>
 </div>
 
 </div>
 </div>
 
 <!-- COINS -->
-<div id="coins" style="display:none;">
+<div id="coins" class="section">
 <div class="container">
 <div class="card"><img src="coin1.png"><h3>400 Coins</h3><p>₹99</p></div>
 <div class="card"><img src="coin2.png"><h3>900 Coins</h3><p>₹199</p></div>
@@ -180,87 +190,88 @@ h3 { color:#22c55e; }
 </div>
 
 <!-- TAGS -->
-<div id="tags" style="display:none;">
+<div id="tags" class="section">
 <div class="container">
 <div class="card"><img src="toy.png"><h3>TOY</h3><p>200 Coins</p></div>
 <div class="card"><img src="meow.png"><h3>MEOW</h3><p>300 Coins</p></div>
-<div class="card"><img src="deadly.png"><h3>DEADLY</h3><p>500 Coins</p></div>
+<div class="card popular"><img src="deadly.png"><h3>DEADLY</h3><p>500 Coins</p></div>
 </div>
-</div>
-
 </div>
 
 <!-- POPUP -->
-<div id="rankPopup" class="popup">
-<div class="box">
-<h2 id="rankTitle"></h2>
-<div id="rankDetails"></div>
-<button class="buy" onclick="closeRank()">Close</button>
+<div id="popup" class="popup">
+<div class="popup-box">
+<h2 id="title"></h2>
+<div id="content"></div>
+<button class="btn" onclick="closePopup()">Close</button>
 </div>
 </div>
 
 <script>
 
-/* SWITCH TABS + BACKGROUND */
+/* tabs */
 function show(id){
-  ranks.style.display='none';
-  coins.style.display='none';
-  tags.style.display='none';
-
-  document.getElementById(id).style.display='block';
-
-  document.body.className = 
-    id==="coins" ? "coins-bg" :
-    id==="tags" ? "tags-bg" : "home-bg";
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 
-function enterStore(){
-  document.querySelector('.hero').style.display='none';
-  store.style.display='block';
-}
-
-/* RANK DATA */
+/* ranks full */
 function openRank(name){
-  rankPopup.style.display="flex";
+  popup.style.display="flex";
 
   if(name==="Prime"){
-    rankTitle.innerHTML="PRIME ₹119";
-    rankDetails.innerHTML=`Diamond Armour Prot IV<br>Full starter kit`;
+    title.innerText="PRIME ₹119";
+    content.innerHTML=`<h3>Perks</h3>/sit /ec /pv 1 /home 3
+    <h3>Kit</h3>
+    Diamond Armour Prot IV<br>
+    Sword Sharp III<br>
+    Pickaxe Efficiency V<br>
+    Axe Efficiency V<br>
+    Totem x2 + Apples`;
   }
 
   if(name==="Mythic"){
-    rankTitle.innerHTML="MYTHIC ₹249";
-    rankDetails.innerHTML=`Netherite kit + crystals`;
+    title.innerText="MYTHIC ₹249";
+    content.innerHTML=`<h3>Perks</h3>/sit /ec /pv 1 /home 5
+    <h3>Kit</h3>
+    Netherite Armour<br>
+    Sword Maxed<br>
+    Crystals + Totems`;
   }
 
   if(name==="Leorix"){
-    rankTitle.innerHTML="LEORIX+ ₹499";
-    rankDetails.innerHTML=`MAX gear + OP items`;
+    title.innerText="LEORIX+ ₹499";
+    content.innerHTML=`<h3>Perks</h3>/craft /home 7
+    <h3>Kit</h3>
+    Max Netherite Gear<br>
+    OP Loot`;
   }
 }
 
-function closeRank(){ rankPopup.style.display="none"; }
+function closePopup(){
+  popup.style.display="none";
+}
 
-/* SNOW */
-const canvas=document.getElementById("snow");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+/* snow */
+const c=document.getElementById("snow");
+const ctx=c.getContext("2d");
+c.width=window.innerWidth;
+c.height=window.innerHeight;
 
 let snow=[];
-for(let i=0;i<100;i++){
-  snow.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*3});
+for(let i=0;i<120;i++){
+  snow.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*3});
 }
 
 function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.clearRect(0,0,c.width,c.height);
   ctx.fillStyle="white";
   snow.forEach(s=>{
     ctx.beginPath();
     ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
     ctx.fill();
     s.y+=1;
-    if(s.y>canvas.height) s.y=0;
+    if(s.y>c.height)s.y=0;
   });
   requestAnimationFrame(draw);
 }
