@@ -5,53 +5,87 @@
 <title>LeorixMC Store</title>
 
 <style>
+
+/* GLOBAL */
 body {
   margin:0;
-  font-family:Segoe UI;
-  background:linear-gradient(135deg,#020617,#0f172a);
+  font-family:'Segoe UI',sans-serif;
+  background:#020617;
   color:white;
+  overflow-x:hidden;
 }
 
-/* NAVBAR */
+/* HERO */
+.hero {
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:radial-gradient(circle at center, #0f172a, #020617);
+  text-align:center;
+}
+
+.title {
+  font-size:70px;
+  font-weight:bold;
+  color:#22c55e;
+  animation:glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow:0 0 10px #22c55e; }
+  to { text-shadow:0 0 40px #4ade80; }
+}
+
+.subtitle {
+  margin-top:10px;
+  opacity:0.7;
+}
+
+.enter {
+  margin-top:30px;
+  padding:15px 40px;
+  background:linear-gradient(90deg,#22c55e,#4ade80);
+  border:none;
+  border-radius:10px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.enter:hover {
+  transform:scale(1.1);
+  box-shadow:0 0 20px #22c55e;
+}
+
+/* STORE */
+#store {
+  display:none;
+  padding:20px;
+}
+
+/* NAV */
 .nav {
   display:flex;
-  justify-content:space-between;
-  padding:15px 30px;
-  background:rgba(0,0,0,0.6);
-  backdrop-filter:blur(10px);
+  justify-content:center;
+  gap:20px;
+  margin-bottom:20px;
 }
 
 .nav button {
   background:none;
   border:none;
   color:white;
-  margin:0 10px;
   cursor:pointer;
-  font-size:16px;
 }
 
 .nav button:hover {
-  color:gold;
-}
-
-/* HERO */
-.hero {
-  text-align:center;
-  padding:60px;
-  background:linear-gradient(90deg, #ff0000, #ff8800);
-  font-size:30px;
-  font-weight:bold;
+  color:#22c55e;
 }
 
 /* SECTIONS */
-.section {
-  display:none;
-  padding:30px;
-}
-
-.active {
-  display:block;
-}
+.section { display:none; }
+.active { display:block; }
 
 /* CARDS */
 .container {
@@ -64,15 +98,14 @@ body {
 .card {
   background:rgba(255,255,255,0.05);
   backdrop-filter:blur(10px);
-  border-radius:20px;
-  width:280px;
   padding:20px;
+  border-radius:20px;
+  width:260px;
   transition:0.3s;
-  box-shadow:0 0 20px rgba(0,0,0,0.5);
 }
 
 .card:hover {
-  transform:translateY(-10px) scale(1.05);
+  transform:translateY(-10px);
   box-shadow:0 0 25px #22c55e;
 }
 
@@ -86,83 +119,86 @@ img {
   border-radius:10px;
 }
 
-button.buy {
+/* BUTTON */
+.buy {
   margin-top:10px;
-  width:100%;
   padding:10px;
+  width:100%;
+  background:#22c55e;
   border:none;
   border-radius:10px;
-  background:#22c55e;
   color:white;
   cursor:pointer;
 }
 
-button.buy:hover {
-  background:#16a34a;
+/* POPUP */
+#popup {
+  display:none;
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  justify-content:center;
+  align-items:center;
 }
 
-/* LOGIN */
-#login {
+.popup-box {
+  background:#1e293b;
+  padding:25px;
+  border-radius:15px;
+  width:300px;
   text-align:center;
-  margin-top:50px;
 }
 
 input {
   padding:10px;
   border-radius:10px;
   border:none;
+  width:100%;
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
-<div class="nav">
-  <div>🔥 LeorixMC</div>
-  <div>
-    <button onclick="show('home')">Home</button>
-    <button onclick="show('ranks')">Ranks</button>
-    <button onclick="show('coins')">Coins</button>
-    <button onclick="show('tags')">Tags</button>
-  </div>
+<!-- HERO -->
+<div class="hero">
+  <div class="title">LEORIXMC</div>
+  <div class="subtitle">India’s Next Generation Minecraft Server</div>
+  <button class="enter" onclick="enterStore()">Enter Store</button>
 </div>
 
-<!-- HOME -->
-<div id="home" class="section active">
-  <div class="hero">🔥 40% OFF SALE 🔥</div>
+<!-- STORE -->
+<div id="store">
 
-  <div id="login">
-    <h2>Enter Username</h2>
-    <input id="username"><br><br>
-    <button class="buy" onclick="login()">Login</button>
-  </div>
+<div class="nav">
+  <button onclick="show('ranks')">Ranks</button>
+  <button onclick="show('coins')">Coins</button>
+  <button onclick="show('tags')">Tags</button>
 </div>
 
 <!-- RANKS -->
-<div id="ranks" class="section">
+<div id="ranks" class="section active">
 <h2>💎 Ranks</h2>
 <div class="container">
 
 <div class="card">
 <img src="prime.png">
-<h3>Prime - ₹119</h3>
-<p>Starter perks + kits</p>
-<button class="buy" onclick="clickSound()">Buy</button>
+<h3>Prime ₹119</h3>
+<button class="buy" onclick="openPopup('Prime Rank')">Buy</button>
 </div>
 
 <div class="card popular">
 <img src="mythic.png">
-<h3>Mythic - ₹249 ⭐</h3>
-<p>Best value + strong gear</p>
-<button class="buy" onclick="clickSound()">Buy</button>
+<h3>Mythic ₹249 ⭐</h3>
+<button class="buy" onclick="openPopup('Mythic Rank')">Buy</button>
 </div>
 
 <div class="card">
 <img src="leorix.png">
-<h3>Leorix+ - ₹499 👑</h3>
-<p>Ultimate power</p>
-<button class="buy" onclick="clickSound()">Buy</button>
+<h3>Leorix+ ₹499 👑</h3>
+<button class="buy" onclick="openPopup('Leorix+')">Buy</button>
 </div>
 
 </div>
@@ -173,11 +209,11 @@ input {
 <h2>🪙 Coins</h2>
 <div class="container">
 
-<div class="card"><img src="coin1.png"><h3>400</h3><button class="buy" onclick="clickSound()">₹99</button></div>
-<div class="card popular"><img src="coin2.png"><h3>900 ⭐</h3><button class="buy" onclick="clickSound()">₹199</button></div>
-<div class="card"><img src="coin3.png"><h3>1500</h3><button class="buy" onclick="clickSound()">₹299</button></div>
-<div class="card"><img src="coin4.png"><h3>2000</h3><button class="buy" onclick="clickSound()">₹399</button></div>
-<div class="card"><img src="coin5.png"><h3>2700 💎</h3><button class="buy" onclick="clickSound()">₹499</button></div>
+<div class="card"><img src="coin1.png"><h3>400</h3><button class="buy" onclick="openPopup('400 Coins')">₹99</button></div>
+<div class="card popular"><img src="coin2.png"><h3>900 ⭐</h3><button class="buy" onclick="openPopup('900 Coins')">₹199</button></div>
+<div class="card"><img src="coin3.png"><h3>1500</h3><button class="buy" onclick="openPopup('1500 Coins')">₹299</button></div>
+<div class="card"><img src="coin4.png"><h3>2000</h3><button class="buy" onclick="openPopup('2000 Coins')">₹399</button></div>
+<div class="card"><img src="coin5.png"><h3>2700 💎</h3><button class="buy" onclick="openPopup('2700 Coins')">₹499</button></div>
 
 </div>
 </div>
@@ -187,31 +223,49 @@ input {
 <h2>🎨 Tags</h2>
 <div class="container">
 
-<div class="card"><img src="toy.png"><h3>TOY</h3><button class="buy" onclick="clickSound()">Buy</button></div>
-<div class="card"><img src="meow.png"><h3>MEOW</h3><button class="buy" onclick="clickSound()">Buy</button></div>
-<div class="card popular"><img src="deadly.png"><h3>DEADLY</h3><button class="buy" onclick="clickSound()">Buy</button></div>
+<div class="card"><img src="toy.png"><h3>TOY</h3><button class="buy" onclick="openPopup('Toy Tag')">Buy</button></div>
+<div class="card"><img src="meow.png"><h3>MEOW</h3><button class="buy" onclick="openPopup('Meow Tag')">Buy</button></div>
+<div class="card popular"><img src="deadly.png"><h3>DEADLY</h3><button class="buy" onclick="openPopup('Deadly Tag')">Buy</button></div>
 
+</div>
+</div>
+
+</div>
+
+<!-- POPUP -->
+<div id="popup">
+<div class="popup-box">
+<h2>Enter Username</h2>
+<input id="userInput"><br><br>
+<button class="buy" onclick="confirmBuy()">Continue</button>
 </div>
 </div>
 
 <audio id="clickSound" src="click.mp3"></audio>
 
 <script>
+function enterStore(){
+  document.querySelector('.hero').style.display='none';
+  document.getElementById('store').style.display='block';
+}
+
 function show(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-function login(){
-  let u=document.getElementById("username").value;
-  if(u===""){alert("Enter username");return;}
-  show('ranks');
+let selectedItem="";
+
+function openPopup(item){
+  selectedItem=item;
+  document.getElementById('popup').style.display='flex';
 }
 
-function clickSound(){
-  let s=document.getElementById("clickSound");
-  s.currentTime=0;
-  s.play();
+function confirmBuy(){
+  let user=document.getElementById('userInput').value;
+  if(user===""){alert("Enter username");return;}
+  alert("Buying "+selectedItem+" for "+user);
+  document.getElementById('popup').style.display='none';
 }
 </script>
 
