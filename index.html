@@ -5,10 +5,13 @@
 <title>LeorixMC Store</title>
 
 <style>
-body {
+html, body {
   margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:url('bg.png') center/cover fixed;
+  padding:0;
+  height:100%;
+  font-family:Segoe UI;
+  background:url('bg.png') no-repeat center center fixed;
+  background-size:cover;
   color:white;
 }
 
@@ -26,80 +29,41 @@ body::before {
 .navbar {
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  padding:20px 40px;
-  background:rgba(0,0,0,0.5);
-  backdrop-filter:blur(10px);
+  padding:20px;
+  background:rgba(0,0,0,0.6);
 }
 
-.logo { width:130px; }
-
-.navbar button {
-  background:none;
-  border:none;
-  color:white;
-  margin:0 10px;
-  font-size:16px;
-  cursor:pointer;
-}
-
-.navbar button:hover {
-  color:#22c55e;
-}
-
-/* hero */
-.hero {
-  text-align:center;
-  margin-top:50px;
-}
-
-.hero h1 { font-size:50px; }
+/* sections */
+.section { display:none; padding:20px; }
+.active { display:block; }
 
 /* cards */
 .container {
   display:flex;
-  justify-content:center;
   flex-wrap:wrap;
-  gap:25px;
-  margin-top:40px;
+  justify-content:center;
+  gap:20px;
 }
 
 .card {
   background:rgba(255,255,255,0.05);
   padding:20px;
-  border-radius:20px;
-  width:260px;
+  border-radius:15px;
+  width:250px;
   text-align:center;
-  backdrop-filter:blur(10px);
-  transition:0.3s;
 }
 
-.card:hover {
-  transform:translateY(-10px);
-  box-shadow:0 0 20px #22c55e;
-}
+.card img { width:100%; }
 
-.popular { border:2px solid gold; }
-
-.card img {
-  width:100%;
-  border-radius:12px;
-}
-
-/* button */
 .btn {
   margin-top:10px;
-  padding:12px;
+  padding:10px;
   width:100%;
   background:#22c55e;
   border:none;
   border-radius:10px;
   cursor:pointer;
 }
-
-/* sections */
-.section { display:none; }
-.active { display:block; }
 
 /* popup */
 .popup {
@@ -112,16 +76,14 @@ body::before {
   align-items:center;
 }
 
-.popup-box {
+.box {
   background:#1e293b;
-  padding:30px;
-  border-radius:15px;
-  width:500px;
+  padding:20px;
+  width:450px;
   max-height:80vh;
   overflow-y:auto;
+  border-radius:10px;
 }
-
-h3 { color:#22c55e; }
 
 /* snow */
 #snow {
@@ -137,20 +99,14 @@ h3 { color:#22c55e; }
 
 <canvas id="snow"></canvas>
 
-<!-- NAVBAR -->
+<!-- NAV -->
 <div class="navbar">
-  <img src="logo.png" class="logo">
+  <div>LeorixMC</div>
   <div>
     <button onclick="show('ranks')">Ranks</button>
     <button onclick="show('coins')">Coins</button>
     <button onclick="show('tags')">Tags</button>
   </div>
-</div>
-
-<!-- HERO -->
-<div class="hero">
-  <h1>LeorixMC Store</h1>
-  <p>Upgrade your gameplay</p>
 </div>
 
 <!-- RANKS -->
@@ -160,19 +116,19 @@ h3 { color:#22c55e; }
 <div class="card">
 <img src="prime.png">
 <h3>Prime ₹119</h3>
-<button class="btn" onclick="openRank('Prime')">View</button>
+<button class="btn" onclick="playClick(); openRank('Prime')">View</button>
 </div>
 
-<div class="card popular">
+<div class="card">
 <img src="mythic.png">
-<h3>Mythic ₹249 ⭐</h3>
-<button class="btn" onclick="openRank('Mythic')">View</button>
+<h3>Mythic ₹249</h3>
+<button class="btn" onclick="playClick(); openRank('Mythic')">View</button>
 </div>
 
 <div class="card">
 <img src="leorix.png">
-<h3>Leorix+ ₹499 👑</h3>
-<button class="btn" onclick="openRank('Leorix')">View</button>
+<h3>Leorix+ ₹499</h3>
+<button class="btn" onclick="playClick(); openRank('Leorix')">View</button>
 </div>
 
 </div>
@@ -181,70 +137,105 @@ h3 { color:#22c55e; }
 <!-- COINS -->
 <div id="coins" class="section">
 <div class="container">
-<div class="card"><img src="coin1.png"><h3>400 Coins</h3><p>₹99</p></div>
-<div class="card"><img src="coin2.png"><h3>900 Coins</h3><p>₹199</p></div>
-<div class="card"><img src="coin3.png"><h3>1500 Coins</h3><p>₹299</p></div>
-<div class="card"><img src="coin4.png"><h3>2000 Coins</h3><p>₹399</p></div>
-<div class="card"><img src="coin5.png"><h3>2700 Coins</h3><p>₹499</p></div>
+
+<div class="card">
+<img src="coin1.png">
+<h3>400 Coins</h3>
+<p>₹99</p>
+<button class="btn" onclick="playClick()">Buy</button>
+</div>
+
+<div class="card">
+<img src="coin2.png">
+<h3>900 Coins</h3>
+<p>₹199</p>
+<button class="btn" onclick="playClick()">Buy</button>
+</div>
+
+<div class="card">
+<img src="coin3.png">
+<h3>1500 Coins</h3>
+<p>₹299</p>
+<button class="btn" onclick="playClick()">Buy</button>
+</div>
+
+<div class="card">
+<img src="coin4.png">
+<h3>2000 Coins</h3>
+<p>₹399</p>
+<button class="btn" onclick="playClick()">Buy</button>
+</div>
+
+<div class="card">
+<img src="coin5.png">
+<h3>2700 Coins</h3>
+<p>₹499</p>
+<button class="btn" onclick="playClick()">Buy</button>
+</div>
+
 </div>
 </div>
 
 <!-- TAGS -->
 <div id="tags" class="section">
 <div class="container">
+
 <div class="card"><img src="toy.png"><h3>TOY</h3><p>200 Coins</p></div>
 <div class="card"><img src="meow.png"><h3>MEOW</h3><p>300 Coins</p></div>
-<div class="card popular"><img src="deadly.png"><h3>DEADLY</h3><p>500 Coins</p></div>
+<div class="card"><img src="deadly.png"><h3>DEADLY</h3><p>500 Coins</p></div>
+
 </div>
 </div>
 
 <!-- POPUP -->
 <div id="popup" class="popup">
-<div class="popup-box">
+<div class="box">
 <h2 id="title"></h2>
 <div id="content"></div>
 <button class="btn" onclick="closePopup()">Close</button>
 </div>
 </div>
 
+<!-- SOUND -->
+<audio id="clickSound" src="click.mp3"></audio>
+
 <script>
 
-/* tabs */
+/* SOUND */
+function playClick(){
+  let s=document.getElementById("clickSound");
+  s.currentTime=0;
+  s.play();
+}
+
+/* TABS */
 function show(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-/* ranks full */
+/* RANK DETAILS */
 function openRank(name){
   popup.style.display="flex";
 
   if(name==="Prime"){
-    title.innerText="PRIME ₹119";
-    content.innerHTML=`<h3>Perks</h3>/sit /ec /pv 1 /home 3
-    <h3>Kit</h3>
+    title.innerText="Prime ₹119";
+    content.innerHTML=`✔ /sit /ec /pv 1 /home 3<br><br>
     Diamond Armour Prot IV<br>
     Sword Sharp III<br>
-    Pickaxe Efficiency V<br>
-    Axe Efficiency V<br>
     Totem x2 + Apples`;
   }
 
   if(name==="Mythic"){
-    title.innerText="MYTHIC ₹249";
-    content.innerHTML=`<h3>Perks</h3>/sit /ec /pv 1 /home 5
-    <h3>Kit</h3>
-    Netherite Armour<br>
-    Sword Maxed<br>
-    Crystals + Totems`;
+    title.innerText="Mythic ₹249";
+    content.innerHTML=`✔ /home 5<br><br>
+    Netherite Armour + Crystals`;
   }
 
   if(name==="Leorix"){
-    title.innerText="LEORIX+ ₹499";
-    content.innerHTML=`<h3>Perks</h3>/craft /home 7
-    <h3>Kit</h3>
-    Max Netherite Gear<br>
-    OP Loot`;
+    title.innerText="Leorix+ ₹499";
+    content.innerHTML=`✔ /craft /home 7<br><br>
+    MAX Gear + OP Items`;
   }
 }
 
@@ -252,7 +243,7 @@ function closePopup(){
   popup.style.display="none";
 }
 
-/* snow */
+/* SNOW */
 const c=document.getElementById("snow");
 const ctx=c.getContext("2d");
 c.width=window.innerWidth;
