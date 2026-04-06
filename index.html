@@ -5,34 +5,11 @@
 <title>LeorixMC Store</title>
 
 <style>
-
 body {
   margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:#020617;
+  font-family:Segoe UI;
+  background:linear-gradient(135deg,#020617,#0f172a);
   color:white;
-}
-
-/* PARTICLES */
-canvas {
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:-1;
-}
-
-/* LOADER */
-#loader {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:#020617;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:30px;
-  color:#22c55e;
-  z-index:9999;
 }
 
 /* HERO */
@@ -44,17 +21,14 @@ canvas {
   align-items:center;
 }
 
-.title {
-  font-size:60px;
-  color:#22c55e;
-  text-shadow:0 0 25px #22c55e;
+.logo {
+  width:180px;
+  filter:drop-shadow(0 0 20px #22c55e);
 }
 
-/* LOGO */
-.logo {
-  width:200px;
-  margin-bottom:15px;
-  filter:drop-shadow(0 0 15px #22c55e);
+.title {
+  font-size:50px;
+  margin-top:10px;
 }
 
 .enter {
@@ -64,6 +38,12 @@ canvas {
   border:none;
   border-radius:10px;
   cursor:pointer;
+  transition:0.3s;
+}
+
+.enter:hover {
+  transform:scale(1.1);
+  box-shadow:0 0 20px #22c55e;
 }
 
 /* STORE */
@@ -71,16 +51,8 @@ canvas {
 
 /* NAV */
 .nav {
-  position:relative;
   text-align:center;
-}
-
-.nav img {
-  position:absolute;
-  left:20px;
-  top:10px;
-  width:70px;
-  filter:drop-shadow(0 0 10px #22c55e);
+  margin-bottom:20px;
 }
 
 .nav button {
@@ -89,6 +61,11 @@ canvas {
   border:none;
   color:white;
   cursor:pointer;
+  font-size:16px;
+}
+
+.nav button:hover {
+  color:#22c55e;
 }
 
 /* CARDS */
@@ -102,18 +79,20 @@ canvas {
 .card {
   background:rgba(255,255,255,0.05);
   padding:20px;
-  border-radius:20px;
-  width:260px;
+  border-radius:15px;
+  width:250px;
+  text-align:center;
   transition:0.3s;
 }
 
 .card:hover {
-  transform:scale(1.08);
-  box-shadow:0 0 30px #22c55e;
+  transform:translateY(-10px) scale(1.05);
+  box-shadow:0 0 25px #22c55e;
 }
 
 .popular {
   border:2px solid gold;
+  box-shadow:0 0 25px gold;
 }
 
 img {
@@ -121,6 +100,7 @@ img {
   border-radius:10px;
 }
 
+/* BUTTON */
 .buy {
   margin-top:10px;
   padding:10px;
@@ -129,6 +109,13 @@ img {
   border:none;
   border-radius:10px;
   cursor:pointer;
+  color:white;
+  transition:0.2s;
+}
+
+.buy:hover {
+  transform:scale(1.05);
+  box-shadow:0 0 15px #22c55e;
 }
 
 /* POPUPS */
@@ -142,20 +129,19 @@ img {
   align-items:center;
 }
 
-.rank-box {
+.box {
   background:#1e293b;
   padding:25px;
   border-radius:15px;
-  width:400px;
+  width:420px;
   max-height:80%;
   overflow:auto;
+  animation:pop 0.3s;
 }
 
-.checkout-box {
-  background:#1e293b;
-  padding:20px;
-  border-radius:15px;
-  width:300px;
+@keyframes pop {
+  from { transform:scale(0.7); opacity:0; }
+  to { transform:scale(1); opacity:1; }
 }
 
 input {
@@ -164,20 +150,15 @@ input {
   border-radius:10px;
   border:none;
 }
-
 </style>
 </head>
 
 <body>
 
-<canvas id="particles"></canvas>
-
-<div id="loader">Loading LeorixMC...</div>
-
 <!-- HERO -->
 <div class="hero">
   <img src="logo.png" class="logo">
-  <div class="title">LEORIXMC</div>
+  <div class="title">LEORIXMC STORE</div>
   <button class="enter" onclick="enterStore()">ENTER STORE</button>
 </div>
 
@@ -185,7 +166,6 @@ input {
 <div id="store">
 
 <div class="nav">
-  <img src="logo.png">
   <button onclick="show('ranks')">Ranks</button>
   <button onclick="show('coins')">Coins</button>
   <button onclick="show('tags')">Tags</button>
@@ -197,16 +177,19 @@ input {
 
 <div class="card">
 <img src="prime.png">
+<h3>Prime - ₹119</h3>
 <button class="buy" onclick="openRank('Prime')">View</button>
 </div>
 
 <div class="card popular">
 <img src="mythic.png">
+<h3>Mythic - ₹249 ⭐</h3>
 <button class="buy" onclick="openRank('Mythic')">View</button>
 </div>
 
 <div class="card">
 <img src="leorix.png">
+<h3>Leorix+ - ₹499 👑</h3>
 <button class="buy" onclick="openRank('Leorix')">View</button>
 </div>
 
@@ -217,9 +200,11 @@ input {
 <div id="coins" style="display:none;">
 <div class="container">
 
-<div class="card"><img src="coin1.png"></div>
-<div class="card"><img src="coin2.png"></div>
-<div class="card"><img src="coin3.png"></div>
+<div class="card"><img src="coin1.png"><h3>400 Coins</h3><p>₹99</p><button class="buy" onclick="openBuy()">Buy</button></div>
+<div class="card popular"><img src="coin2.png"><h3>900 Coins ⭐</h3><p>₹199</p><button class="buy" onclick="openBuy()">Buy</button></div>
+<div class="card"><img src="coin3.png"><h3>1500 Coins</h3><p>₹299</p><button class="buy" onclick="openBuy()">Buy</button></div>
+<div class="card"><img src="coin4.png"><h3>2000 Coins</h3><p>₹399</p><button class="buy" onclick="openBuy()">Buy</button></div>
+<div class="card"><img src="coin5.png"><h3>2700 Coins</h3><p>₹499</p><button class="buy" onclick="openBuy()">Buy</button></div>
 
 </div>
 </div>
@@ -228,9 +213,9 @@ input {
 <div id="tags" style="display:none;">
 <div class="container">
 
-<div class="card"><img src="toy.png"></div>
-<div class="card"><img src="meow.png"></div>
-<div class="card"><img src="deadly.png"></div>
+<div class="card"><img src="toy.png"><h3>TOY</h3><p>100 Coins</p><button class="buy" onclick="openBuy()">Buy</button></div>
+<div class="card"><img src="meow.png"><h3>MEOW</h3><p>100 Coins</p><button class="buy" onclick="openBuy()">Buy</button></div>
+<div class="card popular"><img src="deadly.png"><h3>DEADLY</h3><p>150 Coins</p><button class="buy" onclick="openBuy()">Buy</button></div>
 
 </div>
 </div>
@@ -239,9 +224,9 @@ input {
 
 <!-- RANK POPUP -->
 <div id="rankPopup" class="popup">
-<div class="rank-box">
+<div class="box">
 <h2 id="rankTitle"></h2>
-<p id="rankDetails"></p>
+<div id="rankDetails"></div>
 <button class="buy" onclick="openCheckout()">Buy</button>
 <button class="buy" onclick="closeRank()" style="background:red;">Close</button>
 </div>
@@ -249,23 +234,15 @@ input {
 
 <!-- CHECKOUT -->
 <div id="checkoutPopup" class="popup">
-<div class="checkout-box">
+<div class="box">
 <h2>Enter Username</h2>
 <input id="userInput"><br><br>
 <button class="buy" onclick="confirmBuy()">Continue</button>
 </div>
 </div>
 
-<audio id="clickSound" src="click.mp3"></audio>
-
 <script>
 
-/* LOADER */
-window.onload = () => {
-  setTimeout(()=>loader.style.display="none",1500);
-};
-
-/* NAV */
 function enterStore(){
   document.querySelector('.hero').style.display='none';
   document.getElementById('store').style.display='block';
@@ -278,31 +255,23 @@ function show(id){
   document.getElementById(id).style.display='block';
 }
 
-/* SOUND */
-function playClick(){
-  let s=document.getElementById("clickSound");
-  s.currentTime=0;
-  s.play();
-}
-
-/* RANK DATA */
+/* RANK POPUPS */
 function openRank(name){
-  playClick();
-  rankPopup.style.display="flex";
+  document.getElementById("rankPopup").style.display="flex";
 
   if(name==="Prime"){
-    rankTitle.innerText="⭐ Prime - ₹119";
-    rankDetails.innerHTML="✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 3<br><br>Diamond Gear + Totems";
+    rankTitle.innerText="⭐ PRIME - ₹119";
+    rankDetails.innerHTML=`<b>Perks:</b><br>/sit /ec /pv 1 /home 3<br><br><b>Kit:</b><br>Diamond Gear, Totems, Apples`;
   }
 
   if(name==="Mythic"){
-    rankTitle.innerText="🔥 Mythic - ₹249";
-    rankDetails.innerHTML="✔ /home 5<br>✔ perks<br><br>Netherite Gear + Crystals";
+    rankTitle.innerText="🔥 MYTHIC - ₹249";
+    rankDetails.innerHTML=`<b>Perks:</b><br>/sit /ec /pv 1 /home 5<br><br><b>Kit:</b><br>Netherite Gear, Crystals`;
   }
 
   if(name==="Leorix"){
-    rankTitle.innerText="👑 Leorix+ - ₹499";
-    rankDetails.innerHTML="✔ /craft<br>✔ /home 7<br><br>Max Gear + OP loot";
+    rankTitle.innerText="👑 LEORIX+ - ₹499";
+    rankDetails.innerHTML=`<b>Perks:</b><br>/craft /home 7<br><br><b>Kit:</b><br>Max Gear, OP Loot`;
   }
 }
 
@@ -310,7 +279,10 @@ function closeRank(){
   rankPopup.style.display="none";
 }
 
-/* CHECKOUT */
+function openBuy(){
+  checkoutPopup.style.display="flex";
+}
+
 function openCheckout(){
   checkoutPopup.style.display="flex";
 }
@@ -318,42 +290,9 @@ function openCheckout(){
 function confirmBuy(){
   let user=document.getElementById("userInput").value;
   if(user===""){alert("Enter username");return;}
-  alert("Success!");
+  alert("Purchase successful!");
   checkoutPopup.style.display="none";
 }
-
-/* PARTICLES */
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles=[];
-
-for(let i=0;i<80;i++){
-  particles.push({
-    x:Math.random()*canvas.width,
-    y:Math.random()*canvas.height,
-    r:Math.random()*2,
-    d:Math.random()*1
-  });
-}
-
-function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="white";
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fill();
-    p.y+=p.d;
-    if(p.y>canvas.height)p.y=0;
-  });
-  requestAnimationFrame(draw);
-}
-
-draw();
 
 </script>
 
