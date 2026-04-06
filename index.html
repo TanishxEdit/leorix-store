@@ -1,1 +1,286 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <title>LeorixMC Store</title> <style> html, body { margin:0; padding:0; height:100%; font-family:Segoe UI; background:url('bg.png') no-repeat center center fixed; background-size:cover; color:white; } /* overlay */ .overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); z-index:-1; } /* nav */ .navbar { display:flex; justify-content:space-between; padding:20px; background:rgba(0,0,0,0.5); } .navbar button { background:none; border:none; color:white; margin:0 10px; cursor:pointer; } /* sections */ .section { display:none; padding:20px; } .section.active { display:block; } /* cards */ .container { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; } .card { background:rgba(255,255,255,0.05); padding:20px; border-radius:15px; width:250px; text-align:center; } .card img { width:100%; } /* button */ .btn { margin-top:10px; padding:10px; width:100%; background:#22c55e; border:none; border-radius:10px; cursor:pointer; } /* popup */ .popup { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; } .box { background:#1e293b; padding:20px; border-radius:10px; width:500px; max-height:80vh; overflow-y:auto; } .box h3 { color:#22c55e; } </style> </head> <body> <div class="overlay"></div> <!-- NAV --> <div class="navbar"> <div>LeorixMC</div> <div> <button onclick="showSection('ranks')">Ranks</button> <button onclick="showSection('coins')">Coins</button> <button onclick="showSection('tags')">Tags</button> </div> </div> <!-- RANKS --> <div id="ranks" class="section active"> <div class="container"> <div class="card"> <img src="prime.png"> <h3>Prime ₹119</h3> <button class="btn" onclick="playClick(); openRank('Prime')">View</button> </div> <div class="card"> <img src="mythic.png"> <h3>Mythic ₹249</h3> <button class="btn" onclick="playClick(); openRank('Mythic')">View</button> </div> <div class="card"> <img src="leorix.png"> <h3>Leorix+ ₹499</h3> <button class="btn" onclick="playClick(); openRank('Leorix')">View</button> </div> </div> </div> <!-- COINS --> <div id="coins" class="section"> <div class="container"> <div class="card"><img src="coin1.png"><h3>400 Coins</h3><p>₹99</p><button class="btn" onclick="playClick()">Buy</button></div> <div class="card"><img src="coin2.png"><h3>900 Coins</h3><p>₹199</p><button class="btn" onclick="playClick()">Buy</button></div> <div class="card"><img src="coin3.png"><h3>1500 Coins</h3><p>₹299</p><button class="btn" onclick="playClick()">Buy</button></div> <div class="card"><img src="coin4.png"><h3>2000 Coins</h3><p>₹399</p><button class="btn" onclick="playClick()">Buy</button></div> <div class="card"><img src="coin5.png"><h3>2700 Coins</h3><p>₹499</p><button class="btn" onclick="playClick()">Buy</button></div> </div> </div> <!-- TAGS --> <div id="tags" class="section"> <div class="container"> <div class="card"><img src="toy.png"><h3>TOY</h3><p>200 Coins</p></div> <div class="card"><img src="meow.png"><h3>MEOW</h3><p>300 Coins</p></div> <div class="card"><img src="deadly.png"><h3>DEADLY</h3><p>500 Coins</p></div> </div> </div> <!-- POPUP --> <div id="popup" class="popup"> <div class="box"> <h2 id="title"></h2> <div id="content"></div> <button class="btn" onclick="closePopup()">Close</button> </div> </div> <!-- SOUND --> <audio id="clickSound" src="click.mp3"></audio> <script> /* SOUND */ function playClick(){ const s = document.getElementById("clickSound"); if(s){ s.currentTime=0; s.play().catch(()=>{}); } } /* NAV */ function showSection(id){ document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active')); document.getElementById(id).classList.add('active'); } /* POPUP DATA */ function openRank(name){ const popup = document.getElementById("popup"); const title = document.getElementById("title"); const content = document.getElementById("content"); popup.style.display = "flex"; if(name==="Prime"){ title.innerText="⭐ PRIME - ₹119"; content.innerHTML = `<h3>✔ Perks</h3> ✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 3 <h3>⚔ Kit</h3> Diamond Armour (Protection IV)<br> Diamond Sword (Sharpness III)<br> Diamond Pickaxe (Efficiency V)<br> Diamond Axe (Efficiency V)<br> Trident (Mending)<br> Mace (Mending)<br> Crossbow (QuickCharge, Multishot)<br> <h3>🎒 Items</h3> Bottle Of Enchanting (x64)<br> Golden Carrot (x32)<br> Golden Apple (x32)<br> Enchanted Golden Apple (x10)<br> EnderPearl (x16)<br> Respawn Anchor (x16)<br> GlowStone (x16)<br> Obsidian (x16)<br> Crystal (x16)<br> Totem (x2)`; } if(name==="Mythic"){ title.innerText="🔥 MYTHIC - ₹249"; content.innerHTML = `<h3>✔ Perks</h3> ✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 5 <h3>⚔ Kit</h3> Netherite Armour (Protection IV, Swift Sneak III, Soul Speed III)<br> Netherite Sword (Maxed)<br> Netherite Pickaxe (Silk Touch)<br> Netherite Axe (Maxed)<br> Trident (Riptide III)<br> Mace (Wind Burst II)<br> Crossbow (QuickCharge, Multishot)<br> Bow (Infinity, Mending)<br> <h3>🎒 Items</h3> Golden Carrot (x32)<br> Golden Apple (x64)<br> Enchanted Golden Apple (x10)<br> EnderPearl (x16)<br> Respawn Anchor (x32)<br> GlowStone (x32)<br> Obsidian (x32)<br> Crystal (x32)<br> Totem (x2)`; } if(name==="Leorix"){ title.innerText="👑 LEORIX+ - ₹499"; content.innerHTML = `<h3>✔ Perks</h3> ✔ /pv 1<br>✔ /ec<br>✔ /craft<br>✔ /home 7 <h3>⚔ Kit</h3> Netherite Armour (Protection VI, Swift Sneak III, Soul Speed III)<br> Netherite Sword (Maxed)<br> Netherite Pickaxe (Silk Touch)<br> Netherite Axe (Maxed)<br> Trident (Riptide III)<br> Mace (Wind Burst III)<br> Crossbow (QuickCharge, Multishot)<br> Bow (Infinity, Mending)<br> <h3>🎒 Items</h3> Golden Carrot (x64)<br> Golden Apple (x64)<br> Enchanted Golden Apple (x15)<br> EnderPearl (x16)<br> Respawn Anchor (x64)<br> GlowStone (x64)<br> Obsidian (x64)<br> Crystal (x64)<br> Totem (x2)`; } } function closePopup(){ document.getElementById("popup").style.display="none"; } </script> </body> </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LeorixMC Store</title>
+
+<style>
+html,body{
+  margin:0;
+  height:100%;
+  font-family:Segoe UI;
+  background:url('bg.png') center/cover fixed;
+  color:white;
+}
+
+/* overlay */
+body::before{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  z-index:-1;
+}
+
+/* cursor glow */
+#cursor{
+  position:fixed;
+  width:120px;
+  height:120px;
+  background:radial-gradient(circle, white, transparent);
+  border-radius:50%;
+  pointer-events:none;
+  filter:blur(40px);
+  transform:translate(-50%,-50%);
+}
+
+/* sections */
+.section{display:none;text-align:center;padding:40px;}
+.section.active{display:block;animation:fade .4s;}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(15px);}
+  to{opacity:1;}
+}
+
+/* buttons */
+.btn{
+  padding:15px 25px;
+  margin:10px;
+  background:#22c55e;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  transition:.3s;
+}
+.btn:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 20px #22c55e;
+}
+
+/* cards */
+.container{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:25px;
+}
+
+.card{
+  background:rgba(255,255,255,0.05);
+  padding:20px;
+  border-radius:15px;
+  width:260px;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-10px) scale(1.05);
+  box-shadow:0 0 40px #22c55e;
+}
+
+.card img{width:100%;}
+
+/* popup */
+.popup{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  justify-content:center;
+  align-items:center;
+}
+
+.box{
+  background:#1e293b;
+  width:500px;
+  max-height:80vh;
+  overflow-y:auto;
+  padding:20px;
+  border-radius:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="cursor"></div>
+
+<!-- HOME -->
+<div id="home" class="section active">
+  <h1 style="font-size:50px;">LeorixMC Store</h1>
+  <p>Select Category</p>
+
+  <button class="btn" onclick="go('ranks')">RANKS</button>
+  <button class="btn" onclick="go('coins')">COINS</button>
+  <button class="btn" onclick="go('tags')">TAGS</button>
+</div>
+
+<!-- RANKS -->
+<div id="ranks" class="section">
+<div class="container">
+
+<div class="card">
+<img src="prime.png">
+<h3>Prime ₹119</h3>
+<button class="btn" onclick="playClick(); openRank('Prime')">View</button>
+<button class="btn">Buy</button>
+</div>
+
+<div class="card">
+<img src="mythic.png">
+<h3>Mythic ₹249</h3>
+<button class="btn" onclick="playClick(); openRank('Mythic')">View</button>
+<button class="btn">Buy</button>
+</div>
+
+<div class="card">
+<img src="leorix.png">
+<h3>Leorix+ ₹499</h3>
+<button class="btn" onclick="playClick(); openRank('Leorix')">View</button>
+<button class="btn">Buy</button>
+</div>
+
+</div>
+</div>
+
+<!-- COINS -->
+<div id="coins" class="section">
+<div class="container">
+<div class="card"><img src="coin1.png"><h3>400 Coins</h3><p>₹99</p></div>
+<div class="card"><img src="coin2.png"><h3>900 Coins</h3><p>₹199</p></div>
+<div class="card"><img src="coin3.png"><h3>1500 Coins</h3><p>₹299</p></div>
+<div class="card"><img src="coin4.png"><h3>2000 Coins</h3><p>₹399</p></div>
+<div class="card"><img src="coin5.png"><h3>2700 Coins</h3><p>₹499</p></div>
+</div>
+</div>
+
+<!-- TAGS -->
+<div id="tags" class="section">
+<div class="container">
+<div class="card"><img src="toy.png"><h3>TOY</h3><p>200 Coins</p></div>
+<div class="card"><img src="meow.png"><h3>MEOW</h3><p>300 Coins</p></div>
+<div class="card"><img src="deadly.png"><h3>DEADLY</h3><p>500 Coins</p></div>
+</div>
+</div>
+
+<!-- POPUP -->
+<div id="popup" class="popup">
+<div class="box">
+<h2 id="title"></h2>
+<div id="content"></div>
+<button class="btn" onclick="closePopup()">Close</button>
+</div>
+</div>
+
+<audio id="clickSound" src="click.mp3"></audio>
+
+<script>
+
+function go(id){
+  playClick();
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function playClick(){
+  const s=document.getElementById("clickSound");
+  if(s){ s.currentTime=0; s.play().catch(()=>{}); }
+}
+
+/* FULL DATA */
+function openRank(name){
+  popup.style.display="flex";
+
+  if(name==="Prime"){
+    title.innerText="PRIME ₹119";
+    content.innerHTML=`
+✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 3<br><br>
+Diamond Armour (Protection IV)<br>
+Diamond Sword (Sharpness III)<br>
+Diamond Pickaxe (Efficiency V)<br>
+Diamond Axe (Efficiency V)<br>
+Trident (Mending)<br>
+Mace(Mending)<br>
+Crossbow (QuickCharge, Multishot)<br>
+Bottle Of Enchanting (x64)<br>
+Golden Carrot (x32)<br>
+Golden Apple (x32)<br>
+Enchanted Golden Apple (x10)<br>
+EnderPearl (x16)<br>
+Respawn Anchor (x16)<br>
+GlowStone (x16)<br>
+Obsidian (x16)<br>
+Crystal (x16)<br>
+Totem (x2)
+`;
+  }
+
+  if(name==="Mythic"){
+    title.innerText="MYTHIC ₹249";
+    content.innerHTML=`
+✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 5<br><br>
+Netherite Armour (Protection IV, Swift Sneak III, Soul Speed III)<br>
+Netherite Sword (Maxed)<br>
+Netherite Pickaxe (Silk Touch)<br>
+Netherite Axe (Maxed)<br>
+Trident (Riptide III)<br>
+Mace (Wind Burst II)<br>
+Crossbow (QuickCharge, Multishot)<br>
+Bow (Infinity, Mending)<br>
+Golden Carrot (x32)<br>
+Golden Apple (x64)<br>
+Enchanted Golden Apple (x10)<br>
+EnderPearl (x16)<br>
+Respawn Anchor (x32)<br>
+GlowStone (x32)<br>
+Obsidian (x32)<br>
+Crystal (x32)<br>
+Totem (x2)
+`;
+  }
+
+  if(name==="Leorix"){
+    title.innerText="LEORIX+ ₹499";
+    content.innerHTML=`
+✔ /pv 1<br>✔ /ec<br>✔ /craft<br>✔ /home 7<br><br>
+Netherite Armour (Protection VI, Swift Sneak III, Soul Speed III)<br>
+Netherite Sword (Maxed)<br>
+Netherite Pickaxe (Silk Touch)<br>
+Netherite Axe (Maxed)<br>
+Trident (Riptide III)<br>
+Mace (Wind Burst III)<br>
+Crossbow (QuickCharge, Multishot)<br>
+Bow (Infinity, Mending)<br>
+Golden Carrot (x64)<br>
+Golden Apple (x64)<br>
+Enchanted Golden Apple (x15)<br>
+EnderPearl (x16)<br>
+Respawn Anchor (x64)<br>
+GlowStone (x64)<br>
+Obsidian (x64)<br>
+Crystal (x64)<br>
+Totem (x2)
+`;
+  }
+}
+
+function closePopup(){
+  popup.style.display="none";
+}
+
+/* cursor animation */
+document.addEventListener("mousemove",(e)=>{
+  const c=document.getElementById("cursor");
+  c.style.left=e.clientX+"px";
+  c.style.top=e.clientY+"px";
+});
+
+</script>
+
+</body>
+</html>
