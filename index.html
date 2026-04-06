@@ -8,7 +8,7 @@
 body {
   margin:0;
   font-family:Segoe UI;
-  background:#0f172a;
+  background:linear-gradient(135deg,#020617,#0f172a);
   color:white;
 }
 
@@ -19,39 +19,48 @@ body {
   flex-direction:column;
   justify-content:center;
   align-items:center;
-}
-
-.logo {
-  width:180px;
-  filter:drop-shadow(0 0 15px #22c55e);
-}
-
-.title {
-  font-size:45px;
-}
-
-.enter {
-  margin-top:20px;
-  padding:12px 25px;
-  background:#22c55e;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-/* STORE */
-#store { display:none; padding:20px; }
-
-.nav {
   text-align:center;
 }
 
+.logo {
+  width:200px;
+  filter:drop-shadow(0 0 20px #22c55e);
+}
+
+.title {
+  font-size:55px;
+}
+
+.enter {
+  margin-top:25px;
+  padding:15px 40px;
+  background:#22c55e;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:18px;
+}
+
+/* STORE */
+#store { display:none; padding:30px; }
+
+/* NAV */
+.nav {
+  text-align:center;
+  margin-bottom:30px;
+}
+
 .nav button {
-  margin:10px;
+  margin:0 15px;
   background:none;
   border:none;
   color:white;
   cursor:pointer;
+  font-size:18px;
+}
+
+.nav button:hover {
+  color:#22c55e;
 }
 
 /* CARDS */
@@ -59,60 +68,71 @@ body {
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
-  gap:20px;
+  gap:25px;
 }
 
 .card {
-  background:#1e293b;
-  padding:15px;
-  border-radius:12px;
-  width:240px;
+  background:rgba(255,255,255,0.05);
+  padding:20px;
+  border-radius:20px;
+  width:260px;
   text-align:center;
+  transition:0.3s;
 }
 
 .card:hover {
-  transform:scale(1.05);
+  transform:translateY(-10px) scale(1.05);
+  box-shadow:0 0 30px #22c55e;
+}
+
+.popular {
+  border:2px solid gold;
+  box-shadow:0 0 30px gold;
 }
 
 img {
   width:100%;
-  border-radius:10px;
+  border-radius:12px;
 }
 
+/* BUTTON */
 .buy {
   margin-top:10px;
-  padding:10px;
+  padding:12px;
   width:100%;
   background:#22c55e;
   border:none;
-  border-radius:8px;
+  border-radius:10px;
   cursor:pointer;
+  color:white;
 }
 
-/* POPUPS */
+/* POPUP */
 .popup {
   display:none;
   position:fixed;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.8);
+  background:rgba(0,0,0,0.9);
   justify-content:center;
   align-items:center;
 }
 
 .box {
   background:#1e293b;
-  padding:20px;
-  border-radius:12px;
-  width:400px;
+  padding:25px;
+  border-radius:15px;
+  width:450px;
   max-height:80%;
   overflow:auto;
 }
 
+h3 { color:#22c55e; }
+
 input {
   width:100%;
   padding:10px;
-  border-radius:8px;
+  border-radius:10px;
   border:none;
 }
 </style>
@@ -142,20 +162,23 @@ input {
 
 <div class="card">
 <img src="prime.png">
-<h3>Prime - ₹119</h3>
-<button class="buy" onclick="openRank('Prime')">View</button>
+<h2>Prime</h2>
+<p>₹119</p>
+<button class="buy" onclick="openRank('Prime')">View Details</button>
 </div>
 
-<div class="card">
+<div class="card popular">
 <img src="mythic.png">
-<h3>Mythic - ₹249</h3>
-<button class="buy" onclick="openRank('Mythic')">View</button>
+<h2>Mythic ⭐</h2>
+<p>₹249</p>
+<button class="buy" onclick="openRank('Mythic')">View Details</button>
 </div>
 
 <div class="card">
 <img src="leorix.png">
-<h3>Leorix+ - ₹499</h3>
-<button class="buy" onclick="openRank('Leorix')">View</button>
+<h2>Leorix+ 👑</h2>
+<p>₹499</p>
+<button class="buy" onclick="openRank('Leorix')">View Details</button>
 </div>
 
 </div>
@@ -166,7 +189,7 @@ input {
 <div class="container">
 
 <div class="card"><img src="coin1.png"><h3>400 Coins</h3><p>₹99</p><button class="buy" onclick="openBuy()">Buy</button></div>
-<div class="card"><img src="coin2.png"><h3>900 Coins</h3><p>₹199</p><button class="buy" onclick="openBuy()">Buy</button></div>
+<div class="card popular"><img src="coin2.png"><h3>900 Coins ⭐</h3><p>₹199</p><button class="buy" onclick="openBuy()">Buy</button></div>
 <div class="card"><img src="coin3.png"><h3>1500 Coins</h3><p>₹299</p><button class="buy" onclick="openBuy()">Buy</button></div>
 <div class="card"><img src="coin4.png"><h3>2000 Coins</h3><p>₹399</p><button class="buy" onclick="openBuy()">Buy</button></div>
 <div class="card"><img src="coin5.png"><h3>2700 Coins</h3><p>₹499</p><button class="buy" onclick="openBuy()">Buy</button></div>
@@ -178,9 +201,26 @@ input {
 <div id="tags" style="display:none;">
 <div class="container">
 
-<div class="card"><img src="toy.png"><h3>TOY</h3><p>100 Coins</p><button class="buy" onclick="openBuy()">Buy</button></div>
-<div class="card"><img src="meow.png"><h3>MEOW</h3><p>100 Coins</p><button class="buy" onclick="openBuy()">Buy</button></div>
-<div class="card"><img src="deadly.png"><h3>DEADLY</h3><p>150 Coins</p><button class="buy" onclick="openBuy()">Buy</button></div>
+<div class="card">
+<img src="toy.png">
+<h3>TOY</h3>
+<p>200 Coins</p>
+<button class="buy" onclick="openBuy()">Buy</button>
+</div>
+
+<div class="card">
+<img src="meow.png">
+<h3>MEOW</h3>
+<p>300 Coins</p>
+<button class="buy" onclick="openBuy()">Buy</button>
+</div>
+
+<div class="card popular">
+<img src="deadly.png">
+<h3>DEADLY</h3>
+<p>500 Coins</p>
+<button class="buy" onclick="openBuy()">Buy</button>
+</div>
 
 </div>
 </div>
@@ -224,18 +264,40 @@ function openRank(name){
   document.getElementById("rankPopup").style.display="flex";
 
   if(name==="Prime"){
-    rankTitle.innerText="PRIME - ₹119";
-    rankDetails.innerHTML=`✔ /sit ✔ /ec ✔ /pv 1 ✔ /home 3<br><br>Diamond Gear + Totems + Apples`;
+    rankTitle.innerHTML="⭐ PRIME - ₹119";
+    rankDetails.innerHTML=`
+    <h3>Perks</h3>
+    /sit /ec /pv 1 /home 3
+
+    <h3>Kit</h3>
+    Diamond Armour (Prot IV)<br>
+    Sword Sharp III<br>
+    Totems, Apples, Pearls
+    `;
   }
 
   if(name==="Mythic"){
-    rankTitle.innerText="MYTHIC - ₹249";
-    rankDetails.innerHTML=`✔ /home 5<br><br>Netherite Gear + Crystals`;
+    rankTitle.innerHTML="🔥 MYTHIC - ₹249";
+    rankDetails.innerHTML=`
+    <h3>Perks</h3>
+    /sit /ec /pv 1 /home 5
+
+    <h3>Kit</h3>
+    Netherite Gear<br>
+    Crystals, Apples, Totems
+    `;
   }
 
   if(name==="Leorix"){
-    rankTitle.innerText="LEORIX+ - ₹499";
-    rankDetails.innerHTML=`✔ /craft ✔ /home 7<br><br>Max Gear + OP Loot`;
+    rankTitle.innerHTML="👑 LEORIX+ - ₹499";
+    rankDetails.innerHTML=`
+    <h3>Perks</h3>
+    /craft /home 7
+
+    <h3>Kit</h3>
+    Max Netherite Gear<br>
+    OP loot, Crystals, Totems
+    `;
   }
 }
 
@@ -254,7 +316,7 @@ function openCheckout(){
 function confirmBuy(){
   let user=document.getElementById("userInput").value;
   if(user===""){alert("Enter username");return;}
-  alert("Success!");
+  alert("Purchase successful!");
   document.getElementById("checkoutPopup").style.display="none";
 }
 
