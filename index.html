@@ -24,134 +24,131 @@ body::before{
   z-index:-2;
 }
 
-/* navbar */
-.navbar{
-  display:flex;
-  justify-content:space-between;
-  padding:20px;
-  background:rgba(0,0,0,0.6);
-}
-
-.navbar button{
-  background:none;
-  border:none;
-  color:white;
-  margin:0 10px;
-  cursor:pointer;
+/* cursor glow */
+#cursor{
+  position:fixed;
+  width:120px;
+  height:120px;
+  background:radial-gradient(circle, white, transparent);
+  border-radius:50%;
+  pointer-events:none;
+  filter:blur(40px);
+  transform:translate(-50%,-50%);
+  z-index:9999;
 }
 
 /* sections */
-.section{display:none;padding:20px;}
-.section.active{display:block;}
+.section{display:none;padding:40px;text-align:center;}
+.section.active{display:block;animation:fade 0.5s;}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;}
+}
+
+/* buttons */
+.btn{
+  padding:15px 25px;
+  margin:10px;
+  background:#22c55e;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:16px;
+  transition:.3s;
+}
+
+.btn:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 20px #22c55e;
+}
 
 /* cards */
 .container{
   display:flex;
-  flex-wrap:wrap;
   justify-content:center;
-  gap:20px;
+  flex-wrap:wrap;
+  gap:25px;
 }
 
 .card{
   background:rgba(255,255,255,0.05);
   padding:20px;
   border-radius:15px;
-  width:250px;
-  text-align:center;
+  width:260px;
   transition:.3s;
 }
 
 .card:hover{
   transform:translateY(-10px) scale(1.05);
-  box-shadow:0 0 30px #22c55e;
+  box-shadow:0 0 40px #22c55e;
 }
 
 .card img{width:100%;}
 
-/* buttons */
-.btn{
-  margin-top:10px;
-  padding:10px;
-  width:100%;
-  background:#22c55e;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.buy-btn{
-  background:linear-gradient(45deg,#22c55e,#4ade80);
-}
-
-/* popup */
+/* popup CENTER FIX */
 .popup{
   display:none;
   position:fixed;
+  top:0;
+  left:0;
   width:100%;
   height:100%;
   background:rgba(0,0,0,0.9);
   justify-content:center;
   align-items:center;
+  z-index:1000;
 }
 
 .box{
   background:#1e293b;
-  padding:20px;
   width:500px;
   max-height:80vh;
   overflow-y:auto;
-  border-radius:10px;
-}
-
-.box h3{color:#22c55e;}
-
-/* snow */
-#snow{
-  position:fixed;
-  width:100%;
-  height:100%;
-  pointer-events:none;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 0 40px rgba(34,197,94,0.5);
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="snow"></canvas>
+<div id="cursor"></div>
 
-<!-- NAV -->
-<div class="navbar">
-  <div>LeorixMC</div>
-  <div>
-    <button onclick="show('ranks')">Ranks</button>
-    <button onclick="show('coins')">Coins</button>
-    <button onclick="show('tags')">Tags</button>
-  </div>
+<!-- HOME -->
+<div id="home" class="section active">
+  <h1 style="font-size:50px;">LeorixMC Store</h1>
+  <p>Choose a category</p>
+
+  <button class="btn" onclick="go('ranks')">⚔ RANKS</button>
+  <button class="btn" onclick="go('coins')">💰 COINS</button>
+  <button class="btn" onclick="go('tags')">🏷 TAGS</button>
 </div>
 
 <!-- RANKS -->
-<div id="ranks" class="section active">
+<div id="ranks" class="section">
 <div class="container">
 
 <div class="card">
 <img src="prime.png">
 <h3>Prime ₹119</h3>
 <button class="btn" onclick="playClick(); openRank('Prime')">View</button>
-<button class="btn buy-btn">Buy</button>
+<button class="btn">Buy</button>
 </div>
 
 <div class="card">
 <img src="mythic.png">
 <h3>Mythic ₹249</h3>
 <button class="btn" onclick="playClick(); openRank('Mythic')">View</button>
-<button class="btn buy-btn">Buy</button>
+<button class="btn">Buy</button>
 </div>
 
 <div class="card">
 <img src="leorix.png">
 <h3>Leorix+ ₹499</h3>
 <button class="btn" onclick="playClick(); openRank('Leorix')">View</button>
-<button class="btn buy-btn">Buy</button>
+<button class="btn">Buy</button>
 </div>
 
 </div>
@@ -190,35 +187,36 @@ body::before{
 
 <script>
 
-/* sound */
-function playClick(){
-  let s=document.getElementById("clickSound");
-  if(s){ s.currentTime=0; s.play().catch(()=>{}); }
-}
-
-/* nav */
-function show(id){
+/* navigation */
+function go(id){
+  playClick();
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-/* FULL DATA */
+/* sound */
+function playClick(){
+  const s=document.getElementById("clickSound");
+  if(s){ s.currentTime=0; s.play().catch(()=>{}); }
+}
+
+/* popup */
 function openRank(name){
   popup.style.display="flex";
 
   if(name==="Prime"){
     title.innerText="PRIME ₹119";
-    content.innerHTML=`✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 3<br><br>Diamond Armour (Protection IV)<br>Diamond Sword (Sharpness III)<br>Diamond Pickaxe (Efficiency V)<br>Diamond Axe (Efficiency V)<br>Trident (Mending)<br>Mace(Mending)<br>Crossbow (QuickCharge, Multishot)<br>Bottle Of Enchanting (x64)<br>Golden Carrot (x32)<br>Golden Apple (x32)<br>Enchanted Golden Apple (x10)<br>EnderPearl (x16)<br>Respawn Anchor (x16)<br>GlowStone (x16)<br>Obsidian (x16)<br>Crystal (x16)<br>Totem (x2)`;
+    content.innerHTML=`✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 3<br><br>Diamond Armour (Protection IV)...`;
   }
 
   if(name==="Mythic"){
     title.innerText="MYTHIC ₹249";
-    content.innerHTML=`✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 5<br><br>Netherite Armour (Protection IV, Swift Sneak III, Soul Speed III)<br>Netherite Sword (Maxed)<br>Netherite Pickaxe (Silk Touch)<br>Netherite Axe (Maxed)<br>Trident (Riptide III)<br>Mace (Wind Burst II)<br>Crossbow (QuickCharge, Multishot)<br>Bow (Infinity, Mending)<br>Golden Carrot (x32)<br>Golden Apple (x64)<br>Enchanted Golden Apple (x10)<br>EnderPearl (x16)<br>Respawn Anchor (x32)<br>GlowStone (x32)<br>Obsidian (x32)<br>Crystal (x32)<br>Totem (x2)`;
+    content.innerHTML=`✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 5<br><br>Netherite Armour...`;
   }
 
   if(name==="Leorix"){
     title.innerText="LEORIX+ ₹499";
-    content.innerHTML=`✔ /pv 1<br>✔ /ec<br>✔ /craft<br>✔ /home 7<br><br>Netherite Armour (Protection VI, Swift Sneak III, Soul Speed III)<br>Netherite Sword (Maxed)<br>Netherite Pickaxe (Silk Touch)<br>Netherite Axe (Maxed)<br>Trident (Riptide III)<br>Mace (Wind Burst III)<br>Crossbow (QuickCharge, Multishot)<br>Bow (Infinity, Mending)<br>Golden Carrot (x64)<br>Golden Apple (x64)<br>Enchanted Golden Apple (x15)<br>EnderPearl (x16)<br>Respawn Anchor (x64)<br>GlowStone (x64)<br>Obsidian (x64)<br>Crystal (x64)<br>Totem (x2)`;
+    content.innerHTML=`✔ /pv 1<br>✔ /ec<br>✔ /craft<br>✔ /home 7<br><br>MAX OP Gear...`;
   }
 }
 
@@ -226,30 +224,12 @@ function closePopup(){
   popup.style.display="none";
 }
 
-/* SNOW */
-const c=document.getElementById("snow");
-const ctx=c.getContext("2d");
-c.width=window.innerWidth;
-c.height=window.innerHeight;
-
-let snow=[];
-for(let i=0;i<100;i++){
-  snow.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*3});
-}
-
-function draw(){
-  ctx.clearRect(0,0,c.width,c.height);
-  ctx.fillStyle="white";
-  snow.forEach(s=>{
-    ctx.beginPath();
-    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fill();
-    s.y+=1;
-    if(s.y>c.height)s.y=0;
-  });
-  requestAnimationFrame(draw);
-}
-draw();
+/* cursor glow */
+document.addEventListener("mousemove",(e)=>{
+  const c=document.getElementById("cursor");
+  c.style.left=e.clientX+"px";
+  c.style.top=e.clientY+"px";
+});
 
 </script>
 
