@@ -8,7 +8,7 @@
 body {
   margin:0;
   font-family:Segoe UI;
-  background:linear-gradient(135deg,#020617,#0f172a);
+  background:#0f172a;
   color:white;
 }
 
@@ -23,36 +23,27 @@ body {
 
 .logo {
   width:180px;
-  filter:drop-shadow(0 0 20px #22c55e);
+  filter:drop-shadow(0 0 15px #22c55e);
 }
 
 .title {
-  font-size:50px;
-  margin-top:10px;
+  font-size:45px;
 }
 
 .enter {
   margin-top:20px;
-  padding:15px 30px;
+  padding:12px 25px;
   background:#22c55e;
   border:none;
-  border-radius:10px;
+  border-radius:8px;
   cursor:pointer;
-  transition:0.3s;
-}
-
-.enter:hover {
-  transform:scale(1.1);
-  box-shadow:0 0 20px #22c55e;
 }
 
 /* STORE */
 #store { display:none; padding:20px; }
 
-/* NAV */
 .nav {
   text-align:center;
-  margin-bottom:20px;
 }
 
 .nav button {
@@ -61,11 +52,6 @@ body {
   border:none;
   color:white;
   cursor:pointer;
-  font-size:16px;
-}
-
-.nav button:hover {
-  color:#22c55e;
 }
 
 /* CARDS */
@@ -77,22 +63,15 @@ body {
 }
 
 .card {
-  background:rgba(255,255,255,0.05);
-  padding:20px;
-  border-radius:15px;
-  width:250px;
+  background:#1e293b;
+  padding:15px;
+  border-radius:12px;
+  width:240px;
   text-align:center;
-  transition:0.3s;
 }
 
 .card:hover {
-  transform:translateY(-10px) scale(1.05);
-  box-shadow:0 0 25px #22c55e;
-}
-
-.popular {
-  border:2px solid gold;
-  box-shadow:0 0 25px gold;
+  transform:scale(1.05);
 }
 
 img {
@@ -100,22 +79,14 @@ img {
   border-radius:10px;
 }
 
-/* BUTTON */
 .buy {
   margin-top:10px;
   padding:10px;
   width:100%;
   background:#22c55e;
   border:none;
-  border-radius:10px;
+  border-radius:8px;
   cursor:pointer;
-  color:white;
-  transition:0.2s;
-}
-
-.buy:hover {
-  transform:scale(1.05);
-  box-shadow:0 0 15px #22c55e;
 }
 
 /* POPUPS */
@@ -124,30 +95,24 @@ img {
   position:fixed;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.85);
+  background:rgba(0,0,0,0.8);
   justify-content:center;
   align-items:center;
 }
 
 .box {
   background:#1e293b;
-  padding:25px;
-  border-radius:15px;
-  width:420px;
+  padding:20px;
+  border-radius:12px;
+  width:400px;
   max-height:80%;
   overflow:auto;
-  animation:pop 0.3s;
-}
-
-@keyframes pop {
-  from { transform:scale(0.7); opacity:0; }
-  to { transform:scale(1); opacity:1; }
 }
 
 input {
   width:100%;
   padding:10px;
-  border-radius:10px;
+  border-radius:8px;
   border:none;
 }
 </style>
@@ -181,15 +146,15 @@ input {
 <button class="buy" onclick="openRank('Prime')">View</button>
 </div>
 
-<div class="card popular">
+<div class="card">
 <img src="mythic.png">
-<h3>Mythic - ₹249 ⭐</h3>
+<h3>Mythic - ₹249</h3>
 <button class="buy" onclick="openRank('Mythic')">View</button>
 </div>
 
 <div class="card">
 <img src="leorix.png">
-<h3>Leorix+ - ₹499 👑</h3>
+<h3>Leorix+ - ₹499</h3>
 <button class="buy" onclick="openRank('Leorix')">View</button>
 </div>
 
@@ -201,7 +166,7 @@ input {
 <div class="container">
 
 <div class="card"><img src="coin1.png"><h3>400 Coins</h3><p>₹99</p><button class="buy" onclick="openBuy()">Buy</button></div>
-<div class="card popular"><img src="coin2.png"><h3>900 Coins ⭐</h3><p>₹199</p><button class="buy" onclick="openBuy()">Buy</button></div>
+<div class="card"><img src="coin2.png"><h3>900 Coins</h3><p>₹199</p><button class="buy" onclick="openBuy()">Buy</button></div>
 <div class="card"><img src="coin3.png"><h3>1500 Coins</h3><p>₹299</p><button class="buy" onclick="openBuy()">Buy</button></div>
 <div class="card"><img src="coin4.png"><h3>2000 Coins</h3><p>₹399</p><button class="buy" onclick="openBuy()">Buy</button></div>
 <div class="card"><img src="coin5.png"><h3>2700 Coins</h3><p>₹499</p><button class="buy" onclick="openBuy()">Buy</button></div>
@@ -215,7 +180,7 @@ input {
 
 <div class="card"><img src="toy.png"><h3>TOY</h3><p>100 Coins</p><button class="buy" onclick="openBuy()">Buy</button></div>
 <div class="card"><img src="meow.png"><h3>MEOW</h3><p>100 Coins</p><button class="buy" onclick="openBuy()">Buy</button></div>
-<div class="card popular"><img src="deadly.png"><h3>DEADLY</h3><p>150 Coins</p><button class="buy" onclick="openBuy()">Buy</button></div>
+<div class="card"><img src="deadly.png"><h3>DEADLY</h3><p>150 Coins</p><button class="buy" onclick="openBuy()">Buy</button></div>
 
 </div>
 </div>
@@ -228,7 +193,7 @@ input {
 <h2 id="rankTitle"></h2>
 <div id="rankDetails"></div>
 <button class="buy" onclick="openCheckout()">Buy</button>
-<button class="buy" onclick="closeRank()" style="background:red;">Close</button>
+<button class="buy" onclick="closeRank()">Close</button>
 </div>
 </div>
 
@@ -255,43 +220,42 @@ function show(id){
   document.getElementById(id).style.display='block';
 }
 
-/* RANK POPUPS */
 function openRank(name){
   document.getElementById("rankPopup").style.display="flex";
 
   if(name==="Prime"){
-    rankTitle.innerText="⭐ PRIME - ₹119";
-    rankDetails.innerHTML=`<b>Perks:</b><br>/sit /ec /pv 1 /home 3<br><br><b>Kit:</b><br>Diamond Gear, Totems, Apples`;
+    rankTitle.innerText="PRIME - ₹119";
+    rankDetails.innerHTML=`✔ /sit ✔ /ec ✔ /pv 1 ✔ /home 3<br><br>Diamond Gear + Totems + Apples`;
   }
 
   if(name==="Mythic"){
-    rankTitle.innerText="🔥 MYTHIC - ₹249";
-    rankDetails.innerHTML=`<b>Perks:</b><br>/sit /ec /pv 1 /home 5<br><br><b>Kit:</b><br>Netherite Gear, Crystals`;
+    rankTitle.innerText="MYTHIC - ₹249";
+    rankDetails.innerHTML=`✔ /home 5<br><br>Netherite Gear + Crystals`;
   }
 
   if(name==="Leorix"){
-    rankTitle.innerText="👑 LEORIX+ - ₹499";
-    rankDetails.innerHTML=`<b>Perks:</b><br>/craft /home 7<br><br><b>Kit:</b><br>Max Gear, OP Loot`;
+    rankTitle.innerText="LEORIX+ - ₹499";
+    rankDetails.innerHTML=`✔ /craft ✔ /home 7<br><br>Max Gear + OP Loot`;
   }
 }
 
 function closeRank(){
-  rankPopup.style.display="none";
+  document.getElementById("rankPopup").style.display="none";
 }
 
 function openBuy(){
-  checkoutPopup.style.display="flex";
+  document.getElementById("checkoutPopup").style.display="flex";
 }
 
 function openCheckout(){
-  checkoutPopup.style.display="flex";
+  document.getElementById("checkoutPopup").style.display="flex";
 }
 
 function confirmBuy(){
   let user=document.getElementById("userInput").value;
   if(user===""){alert("Enter username");return;}
-  alert("Purchase successful!");
-  checkoutPopup.style.display="none";
+  alert("Success!");
+  document.getElementById("checkoutPopup").style.display="none";
 }
 
 </script>
