@@ -11,7 +11,6 @@ html,body{
   background:url('bg.png') center/cover fixed;
   color:white;
   overflow-x:hidden;
-  overflow-y:auto;
 }
 
 /* overlay */
@@ -20,7 +19,7 @@ body::before{
   position:fixed;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.7);
+  background:rgba(0,0,0,0.65);
   z-index:-1;
 }
 
@@ -29,36 +28,51 @@ body::before{
   position:fixed;
   width:120px;
   height:120px;
-  background:radial-gradient(circle, white, transparent);
+  background:radial-gradient(circle, #22c55e, transparent);
   border-radius:50%;
   pointer-events:none;
   filter:blur(40px);
   transform:translate(-50%,-50%);
-  z-index:9999;
 }
 
-/* snow */
-#snow{
-  position:fixed;
-  width:100%;
-  height:100%;
-  pointer-events:none;
+/* HOME */
+#home{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.logo{
+  font-size:90px;
+  font-weight:900;
+  background:linear-gradient(90deg,#22c55e,#4ade80,#22c55e);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:glow 2s infinite alternate, float 3s infinite alternate;
+}
+
+.subtitle{
+  letter-spacing:8px;
+  margin-bottom:30px;
+}
+
+@keyframes glow{
+  from{ text-shadow:0 0 10px #22c55e; }
+  to{ text-shadow:0 0 50px #4ade80; }
+}
+@keyframes float{
+  from{ transform:translateY(0); }
+  to{ transform:translateY(-12px); }
 }
 
 /* sections */
 .section{
   display:none;
+  min-height:100vh;
   padding:40px;
   text-align:center;
-}
-.section.active{
-  display:block;
-  animation:fade .4s;
-}
-
-@keyframes fade{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;}
 }
 
 /* buttons */
@@ -72,8 +86,15 @@ body::before{
   transition:.3s;
 }
 .btn:hover{
-  transform:scale(1.08);
-  box-shadow:0 0 20px #22c55e;
+  transform:scale(1.1);
+  box-shadow:0 0 25px #22c55e;
+}
+
+/* back */
+.back{
+  position:absolute;
+  top:20px;
+  left:20px;
 }
 
 /* cards */
@@ -81,24 +102,24 @@ body::before{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
-  gap:25px;
+  gap:30px;
 }
 
 .card{
   background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px);
   padding:20px;
   border-radius:15px;
   width:260px;
-  transition:.3s;
+  transition:.4s;
 }
 .card:hover{
-  transform:translateY(-10px) scale(1.05);
-  box-shadow:0 0 40px #22c55e;
+  transform:rotateX(5deg) rotateY(5deg) scale(1.07);
+  box-shadow:0 0 50px #22c55e;
 }
-
 .card img{width:100%;}
 
-/* popup CENTERED */
+/* popup */
 .popup{
   display:none;
   position:fixed;
@@ -109,36 +130,27 @@ body::before{
   background:rgba(0,0,0,0.9);
   justify-content:center;
   align-items:center;
-  z-index:9999;
 }
 
 .box{
   background:#1e293b;
-  width:500px;
+  width:520px;
   max-height:80vh;
   overflow-y:auto;
-  padding:20px;
+  padding:25px;
   border-radius:12px;
-  box-shadow:0 0 40px rgba(34,197,94,0.5);
-  animation:pop .25s;
-}
-
-@keyframes pop{
-  from{transform:scale(0.8);opacity:0;}
-  to{transform:scale(1);opacity:1;}
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="snow"></canvas>
 <div id="cursor"></div>
 
 <!-- HOME -->
-<div id="home" class="section active">
-<h1 style="font-size:50px;">LeorixMC Store</h1>
-<p>Choose Category</p>
+<div id="home">
+<h1 class="logo">LEORIXMC</h1>
+<p class="subtitle">STORE</p>
 
 <button class="btn" onclick="go('ranks')">RANKS</button>
 <button class="btn" onclick="go('coins')">COINS</button>
@@ -147,26 +159,28 @@ body::before{
 
 <!-- RANKS -->
 <div id="ranks" class="section">
+<button class="btn back" onclick="go('home')">⬅ Back</button>
+
 <div class="container">
 
 <div class="card">
 <img src="prime.png">
 <h3>Prime ₹119</h3>
-<button class="btn" onclick="playClick(); openRank('Prime')">View</button>
+<button class="btn" onclick="openRank('Prime')">View</button>
 <button class="btn">Buy</button>
 </div>
 
 <div class="card">
 <img src="mythic.png">
 <h3>Mythic ₹249</h3>
-<button class="btn" onclick="playClick(); openRank('Mythic')">View</button>
+<button class="btn" onclick="openRank('Mythic')">View</button>
 <button class="btn">Buy</button>
 </div>
 
 <div class="card">
 <img src="leorix.png">
 <h3>Leorix+ ₹499</h3>
-<button class="btn" onclick="playClick(); openRank('Leorix')">View</button>
+<button class="btn" onclick="openRank('Leorix')">View</button>
 <button class="btn">Buy</button>
 </div>
 
@@ -175,6 +189,8 @@ body::before{
 
 <!-- COINS -->
 <div id="coins" class="section">
+<button class="btn back" onclick="go('home')">⬅ Back</button>
+
 <div class="container">
 <div class="card"><img src="coin1.png"><h3>400 Coins</h3><p>₹99</p></div>
 <div class="card"><img src="coin2.png"><h3>900 Coins</h3><p>₹199</p></div>
@@ -186,6 +202,8 @@ body::before{
 
 <!-- TAGS -->
 <div id="tags" class="section">
+<button class="btn back" onclick="go('home')">⬅ Back</button>
+
 <div class="container">
 <div class="card"><img src="toy.png"><h3>TOY</h3><p>200 Coins</p></div>
 <div class="card"><img src="meow.png"><h3>MEOW</h3><p>300 Coins</p></div>
@@ -206,35 +224,26 @@ body::before{
 
 <script>
 
-/* navigation */
+/* nav */
 function go(id){
-  playClick();
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  document.getElementById("home").style.display="none";
+  document.querySelectorAll('.section').forEach(s=>s.style.display="none");
+  document.getElementById(id).style.display="block";
 }
 
-/* sound */
-function playClick(){
-  let s=document.getElementById("clickSound");
-  if(s){ s.currentTime=0; s.play().catch(()=>{}); }
-}
-
-/* FULL DATA */
+/* popup */
 function openRank(name){
-  document.getElementById("popup").style.display="flex";
-
-  let title=document.getElementById("title");
-  let content=document.getElementById("content");
+  popup.style.display="flex";
 
   if(name==="Prime"){
-    title.innerText="PRIME ₹119";
+    title.innerHTML="PRIME ₹119";
     content.innerHTML=`✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 3<br><br>
 Diamond Armour (Protection IV)<br>
 Diamond Sword (Sharpness III)<br>
 Diamond Pickaxe (Efficiency V)<br>
 Diamond Axe (Efficiency V)<br>
 Trident (Mending)<br>
-Mace(Mending)<br>
+Mace (Mending)<br>
 Crossbow (QuickCharge, Multishot)<br>
 Bottle Of Enchanting (x64)<br>
 Golden Carrot (x32)<br>
@@ -249,7 +258,7 @@ Totem (x2)`;
   }
 
   if(name==="Mythic"){
-    title.innerText="MYTHIC ₹249";
+    title.innerHTML="MYTHIC ₹249";
     content.innerHTML=`✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 5<br><br>
 Netherite Armour (Protection IV, Swift Sneak III, Soul Speed III)<br>
 Netherite Sword (Maxed)<br>
@@ -271,7 +280,7 @@ Totem (x2)`;
   }
 
   if(name==="Leorix"){
-    title.innerText="LEORIX+ ₹499";
+    title.innerHTML="LEORIX+ ₹499";
     content.innerHTML=`✔ /pv 1<br>✔ /ec<br>✔ /craft<br>✔ /home 7<br><br>
 Netherite Armour (Protection VI, Swift Sneak III, Soul Speed III)<br>
 Netherite Sword (Maxed)<br>
@@ -294,40 +303,14 @@ Totem (x2)`;
 }
 
 function closePopup(){
-  document.getElementById("popup").style.display="none";
+  popup.style.display="none";
 }
 
 /* cursor */
 document.addEventListener("mousemove",(e)=>{
-  let c=document.getElementById("cursor");
-  c.style.left=e.clientX+"px";
-  c.style.top=e.clientY+"px";
+  cursor.style.left=e.clientX+"px";
+  cursor.style.top=e.clientY+"px";
 });
-
-/* snow */
-const canvas=document.getElementById("snow");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let snow=[];
-for(let i=0;i<100;i++){
-  snow.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*3});
-}
-
-function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="white";
-  snow.forEach(s=>{
-    ctx.beginPath();
-    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fill();
-    s.y+=1;
-    if(s.y>canvas.height)s.y=0;
-  });
-  requestAnimationFrame(draw);
-}
-draw();
 
 </script>
 
