@@ -11,7 +11,8 @@ html,body{
   font-family:Segoe UI;
   background:url('bg.png') center/cover fixed;
   color:white;
-  overflow-x:hidden;
+  overflow:hidden;
+  position:relative;
 }
 
 /* overlay */
@@ -20,15 +21,7 @@ body::before{
   position:fixed;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.65);
-  z-index:-1;
-}
-
-/* PARTICLES */
-canvas{
-  position:fixed;
-  top:0;
-  left:0;
+  background:rgba(0,0,0,0.6);
   z-index:-1;
 }
 
@@ -41,24 +34,34 @@ canvas{
   border-radius:50%;
   pointer-events:none;
   filter:blur(40px);
+  z-index:999;
 }
 
-/* pages */
+/* pages FIXED */
 .page{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
   display:none;
-  min-height:100vh;
   padding:40px;
+  box-sizing:border-box;
+  overflow-y:auto;
   text-align:center;
-  animation:fade 0.5s;
 }
-.page.active{display:block;}
+
+.page.active{
+  display:block;
+  animation:fade 0.4s;
+}
 
 @keyframes fade{
-  from{opacity:0; transform:translateY(20px);}
+  from{opacity:0;}
   to{opacity:1;}
 }
 
-/* HOME */
+/* HOME CENTER */
 #home{
   display:flex;
   flex-direction:column;
@@ -66,23 +69,19 @@ canvas{
   align-items:center;
 }
 
+/* logo */
 .logo{
-  font-size:100px;
+  font-size:90px;
   font-weight:900;
   background:linear-gradient(90deg,#22c55e,#4ade80,#22c55e);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:glow 2s infinite alternate, float 3s infinite alternate;
+  animation:glow 2s infinite alternate;
 }
 
 @keyframes glow{
   from{ text-shadow:0 0 10px #22c55e;}
-  to{ text-shadow:0 0 60px #4ade80;}
-}
-
-@keyframes float{
-  from{ transform:translateY(0);}
-  to{ transform:translateY(-15px);}
+  to{ text-shadow:0 0 40px #4ade80;}
 }
 
 /* buttons */
@@ -91,13 +90,12 @@ canvas{
   margin:10px;
   background:#22c55e;
   border:none;
-  border-radius:12px;
+  border-radius:10px;
   cursor:pointer;
-  transition:.3s;
 }
 .btn:hover{
   transform:scale(1.1);
-  box-shadow:0 0 25px #22c55e;
+  box-shadow:0 0 20px #22c55e;
 }
 
 /* back */
@@ -112,21 +110,22 @@ canvas{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
-  gap:30px;
+  gap:25px;
 }
 
 .card{
   background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(15px);
+  backdrop-filter:blur(10px);
   padding:20px;
   border-radius:15px;
   width:260px;
-  transition:.4s;
+  transition:.3s;
 }
 .card:hover{
-  transform:scale(1.08) rotateX(5deg) rotateY(5deg);
-  box-shadow:0 0 60px #22c55e;
+  transform:scale(1.05);
+  box-shadow:0 0 30px #22c55e;
 }
+
 .card img{width:100%;}
 
 /* popup */
@@ -140,6 +139,7 @@ canvas{
   background:rgba(0,0,0,0.9);
   justify-content:center;
   align-items:center;
+  z-index:1000;
 }
 
 .box{
@@ -155,7 +155,6 @@ canvas{
 
 <body>
 
-<canvas id="particles"></canvas>
 <div id="cursor"></div>
 
 <!-- HOME -->
@@ -308,31 +307,6 @@ document.addEventListener("mousemove",(e)=>{
   cursor.style.left=e.clientX+"px";
   cursor.style.top=e.clientY+"px";
 });
-
-/* PARTICLES */
-const canvas=document.getElementById("particles");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let particles=[];
-for(let i=0;i<80;i++){
-  particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height});
-}
-
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="#22c55e";
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,2,0,Math.PI*2);
-    ctx.fill();
-    p.y+=0.5;
-    if(p.y>canvas.height)p.y=0;
-  });
-  requestAnimationFrame(animate);
-}
-animate();
 
 </script>
 
