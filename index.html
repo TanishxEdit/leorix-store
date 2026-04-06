@@ -12,7 +12,6 @@ html,body{
   background:url('bg.png') center/cover fixed;
   color:white;
   overflow:hidden;
-  position:relative;
 }
 
 /* overlay */
@@ -21,7 +20,7 @@ body::before{
   position:fixed;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.65);
   z-index:-1;
 }
 
@@ -37,9 +36,18 @@ body::before{
   z-index:999;
 }
 
-/* pages FIXED */
+/* SNOW */
+#snow{
+  position:fixed;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* PAGES (FIXED SYSTEM) */
 .page{
-  position:absolute;
+  position:fixed;
   top:0;
   left:0;
   width:100%;
@@ -76,12 +84,6 @@ body::before{
   background:linear-gradient(90deg,#22c55e,#4ade80,#22c55e);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:glow 2s infinite alternate;
-}
-
-@keyframes glow{
-  from{ text-shadow:0 0 10px #22c55e;}
-  to{ text-shadow:0 0 40px #4ade80;}
 }
 
 /* buttons */
@@ -92,6 +94,7 @@ body::before{
   border:none;
   border-radius:10px;
   cursor:pointer;
+  transition:.3s;
 }
 .btn:hover{
   transform:scale(1.1);
@@ -155,6 +158,7 @@ body::before{
 
 <body>
 
+<canvas id="snow"></canvas>
 <div id="cursor"></div>
 
 <!-- HOME -->
@@ -307,6 +311,31 @@ document.addEventListener("mousemove",(e)=>{
   cursor.style.left=e.clientX+"px";
   cursor.style.top=e.clientY+"px";
 });
+
+/* snow */
+const snow=document.getElementById("snow");
+const ctx=snow.getContext("2d");
+snow.width=window.innerWidth;
+snow.height=window.innerHeight;
+
+let flakes=[];
+for(let i=0;i<100;i++){
+  flakes.push({x:Math.random()*snow.width,y:Math.random()*snow.height,r:Math.random()*3});
+}
+
+function drawSnow(){
+  ctx.clearRect(0,0,snow.width,snow.height);
+  ctx.fillStyle="white";
+  flakes.forEach(f=>{
+    ctx.beginPath();
+    ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
+    ctx.fill();
+    f.y+=1;
+    if(f.y>snow.height)f.y=0;
+  });
+  requestAnimationFrame(drawSnow);
+}
+drawSnow();
 
 </script>
 
