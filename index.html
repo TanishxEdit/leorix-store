@@ -8,7 +8,7 @@
 html,body{
   margin:0;
   height:100%;
-  font-family:'Segoe UI';
+  font-family:Segoe UI;
   background:url('bg.png') center/cover fixed;
   color:white;
 }
@@ -31,16 +31,12 @@ body::before{
   background:rgba(0,0,0,0.6);
 }
 
-/* sections */
-.section{display:none;padding:20px;}
-.section.active{display:block;}
-
 /* cards */
 .container{
   display:flex;
-  flex-wrap:wrap;
   justify-content:center;
   gap:20px;
+  padding:30px;
 }
 
 .card{
@@ -49,17 +45,8 @@ body::before{
   border-radius:15px;
   width:260px;
   text-align:center;
-  transition:.3s;
 }
 
-.card:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 30px #22c55e;
-}
-
-.card img{width:100%;}
-
-/* buttons */
 .btn{
   margin-top:10px;
   padding:10px;
@@ -74,95 +61,98 @@ body::before{
 .popup{
   display:none;
   position:fixed;
+  top:0;
+  left:0;
   width:100%;
   height:100%;
   background:rgba(0,0,0,0.9);
-  justify-content:center;
   align-items:center;
+  justify-content:center;
 }
 
+/* THIS FIXES SCROLL */
 .box{
   background:#1e293b;
-  padding:20px;
   width:500px;
   max-height:80vh;
-  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
   border-radius:10px;
+  overflow:hidden;
 }
 
-.box h3{color:#22c55e;}
+/* header */
+.popup-header{
+  padding:15px;
+  background:#111827;
+  font-weight:bold;
+}
+
+/* scrollable content */
+.popup-content{
+  padding:15px;
+  overflow-y:auto;
+  max-height:60vh;
+}
+
+/* footer */
+.popup-footer{
+  padding:10px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <div class="navbar">
   <div>LeorixMC</div>
-  <div>
-    <button onclick="show('ranks')">Ranks</button>
-    <button onclick="show('coins')">Coins</button>
-    <button onclick="show('tags')">Tags</button>
-  </div>
 </div>
 
-<!-- RANKS -->
-<div id="ranks" class="section active">
 <div class="container">
 
 <div class="card">
-<img src="prime.png">
 <h3>Prime ₹119</h3>
 <button class="btn" onclick="openRank('Prime')">View</button>
-<button class="btn">Buy</button>
 </div>
 
 <div class="card">
-<img src="mythic.png">
 <h3>Mythic ₹249</h3>
 <button class="btn" onclick="openRank('Mythic')">View</button>
-<button class="btn">Buy</button>
 </div>
 
 <div class="card">
-<img src="leorix.png">
 <h3>Leorix+ ₹499</h3>
 <button class="btn" onclick="openRank('Leorix')">View</button>
-<button class="btn">Buy</button>
 </div>
 
-</div>
 </div>
 
 <!-- POPUP -->
 <div id="popup" class="popup">
-<div class="box">
-<h2 id="title"></h2>
-<div id="content"></div>
-<button class="btn" onclick="closePopup()">Close</button>
-</div>
+  <div class="box">
+    
+    <div class="popup-header" id="title"></div>
+
+    <div class="popup-content" id="content"></div>
+
+    <div class="popup-footer">
+      <button class="btn" onclick="closePopup()">Close</button>
+    </div>
+
+  </div>
 </div>
 
 <script>
 
-/* nav */
-function show(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-/* FULL DATA (YOUR EXACT TEXT) */
 function openRank(name){
-  popup.style.display="flex";
+  document.getElementById("popup").style.display="flex";
+
+  let title = document.getElementById("title");
+  let content = document.getElementById("content");
 
   if(name==="Prime"){
     title.innerText="PRIME ₹119";
-    content.innerHTML=`
-✔ /sit<br>
-✔ /ec<br>
-✔ /pv 1<br>
-✔ /home 3<br><br>
-
+    content.innerHTML=`✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 3<br><br>
 Diamond Armour (Protection IV)<br>
 Diamond Sword (Sharpness III)<br>
 Diamond Pickaxe (Efficiency V)<br>
@@ -179,18 +169,12 @@ Respawn Anchor (x16)<br>
 GlowStone (x16)<br>
 Obsidian (x16)<br>
 Crystal (x16)<br>
-Totem (x2)
-`;
+Totem (x2)`;
   }
 
   if(name==="Mythic"){
     title.innerText="MYTHIC ₹249";
-    content.innerHTML=`
-✔ /sit<br>
-✔ /ec<br>
-✔ /pv 1<br>
-✔ /home 5<br><br>
-
+    content.innerHTML=`✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 5<br><br>
 Netherite Armour (Protection IV, Swift Sneak III, Soul Speed III)<br>
 Netherite Sword (Maxed)<br>
 Netherite Pickaxe (Silk Touch)<br>
@@ -207,18 +191,12 @@ Respawn Anchor (x32)<br>
 GlowStone (x32)<br>
 Obsidian (x32)<br>
 Crystal (x32)<br>
-Totem (x2)
-`;
+Totem (x2)`;
   }
 
   if(name==="Leorix"){
     title.innerText="LEORIX+ ₹499";
-    content.innerHTML=`
-✔ /pv 1<br>
-✔ /ec<br>
-✔ /craft<br>
-✔ /home 7<br><br>
-
+    content.innerHTML=`✔ /pv 1<br>✔ /ec<br>✔ /craft<br>✔ /home 7<br><br>
 Netherite Armour (Protection VI, Swift Sneak III, Soul Speed III)<br>
 Netherite Sword (Maxed)<br>
 Netherite Pickaxe (Silk Touch)<br>
@@ -235,13 +213,12 @@ Respawn Anchor (x64)<br>
 GlowStone (x64)<br>
 Obsidian (x64)<br>
 Crystal (x64)<br>
-Totem (x2)
-`;
+Totem (x2)`;
   }
 }
 
 function closePopup(){
-  popup.style.display="none";
+  document.getElementById("popup").style.display="none";
 }
 
 </script>
