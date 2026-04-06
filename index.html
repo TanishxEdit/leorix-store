@@ -20,11 +20,20 @@ body::before{
   position:fixed;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.65);
+  background:rgba(0,0,0,0.6);
   z-index:-1;
 }
 
-/* cursor glow */
+/* snow */
+#snow{
+  position:fixed;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* cursor */
 #cursor{
   position:fixed;
   width:120px;
@@ -36,16 +45,7 @@ body::before{
   z-index:999;
 }
 
-/* SNOW */
-#snow{
-  position:fixed;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  z-index:0;
-}
-
-/* PAGES (FIXED SYSTEM) */
+/* PAGES */
 .page{
   position:fixed;
   top:0;
@@ -56,25 +56,21 @@ body::before{
   padding:40px;
   box-sizing:border-box;
   overflow-y:auto;
-  text-align:center;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+
+  opacity:0;
+  transform:scale(1.1);
+  filter:blur(10px);
+  transition:all 0.4s ease;
 }
 
 .page.active{
-  display:block;
-  animation:fade 0.4s;
-}
-
-@keyframes fade{
-  from{opacity:0;}
-  to{opacity:1;}
-}
-
-/* HOME CENTER */
-#home{
   display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+  opacity:1;
+  transform:scale(1);
+  filter:blur(0);
 }
 
 /* logo */
@@ -84,6 +80,7 @@ body::before{
   background:linear-gradient(90deg,#22c55e,#4ade80,#22c55e);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
+  text-shadow:0 0 40px #22c55e;
 }
 
 /* buttons */
@@ -118,17 +115,16 @@ body::before{
 
 .card{
   background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(12px);
   padding:20px;
   border-radius:15px;
   width:260px;
   transition:.3s;
 }
 .card:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 30px #22c55e;
+  transform:scale(1.07);
+  box-shadow:0 0 40px #22c55e;
 }
-
 .card img{width:100%;}
 
 /* popup */
@@ -231,7 +227,7 @@ function playClick(){
   if(s){s.currentTime=0;s.play().catch(()=>{});}
 }
 
-/* FULL DATA */
+/* RANK DATA */
 function openRank(name){
   popup.style.display="flex";
 
@@ -306,13 +302,13 @@ function closePopup(){
   popup.style.display="none";
 }
 
-/* cursor */
+/* cursor glow */
 document.addEventListener("mousemove",(e)=>{
   cursor.style.left=e.clientX+"px";
   cursor.style.top=e.clientY+"px";
 });
 
-/* snow */
+/* SNOW */
 const snow=document.getElementById("snow");
 const ctx=snow.getContext("2d");
 snow.width=window.innerWidth;
@@ -331,7 +327,10 @@ function drawSnow(){
     ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
     ctx.fill();
     f.y+=1;
-    if(f.y>snow.height)f.y=0;
+    if(f.y>snow.height){
+      f.y=0;
+      f.x=Math.random()*snow.width;
+    }
   });
   requestAnimationFrame(drawSnow);
 }
