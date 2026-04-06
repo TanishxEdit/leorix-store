@@ -11,7 +11,6 @@ html,body{
   font-family:'Segoe UI';
   background:url('bg.png') center/cover fixed;
   color:white;
-  overflow-x:hidden;
 }
 
 /* overlay */
@@ -20,108 +19,58 @@ body::before{
   position:fixed;
   width:100%;
   height:100%;
-  background:linear-gradient(to bottom,rgba(0,0,0,0.6),rgba(0,0,0,0.9));
+  background:rgba(0,0,0,0.7);
   z-index:-1;
 }
 
-/* NAV */
+/* navbar */
 .navbar{
   display:flex;
   justify-content:space-between;
-  padding:20px 40px;
+  padding:20px;
   background:rgba(0,0,0,0.6);
-  backdrop-filter:blur(10px);
 }
 
-.navbar button{
-  background:none;
-  border:none;
-  color:white;
-  margin:0 10px;
-  font-size:16px;
-  cursor:pointer;
-}
-
-.navbar button:hover{
-  color:#22c55e;
-}
-
-/* SECTIONS */
-.section{
-  display:none;
-  padding:30px;
-  animation:fade 0.5s;
-}
+/* sections */
+.section{display:none;padding:20px;}
 .section.active{display:block;}
 
-@keyframes fade{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;}
-}
-
-/* CARDS */
+/* cards */
 .container{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
-  gap:25px;
+  gap:20px;
 }
 
 .card{
   background:rgba(255,255,255,0.05);
   padding:20px;
-  border-radius:18px;
+  border-radius:15px;
   width:260px;
   text-align:center;
-  transition:0.3s;
-  position:relative;
-  overflow:hidden;
+  transition:.3s;
 }
 
 .card:hover{
-  transform:translateY(-10px) scale(1.05);
+  transform:scale(1.05);
   box-shadow:0 0 30px #22c55e;
 }
 
-/* glow sweep */
-.card::before{
-  content:"";
-  position:absolute;
-  width:200%;
-  height:200%;
-  background:linear-gradient(120deg,transparent,rgba(34,197,94,0.3),transparent);
-  top:-100%;
-  left:-100%;
-  transform:rotate(25deg);
-  transition:0.6s;
-}
-.card:hover::before{
-  top:100%;
-  left:100%;
-}
+.card img{width:100%;}
 
-.card img{
-  width:100%;
-  border-radius:10px;
-}
-
-/* BUTTON */
+/* buttons */
 .btn{
   margin-top:10px;
-  padding:12px;
+  padding:10px;
   width:100%;
   background:#22c55e;
   border:none;
   border-radius:10px;
   cursor:pointer;
-  transition:0.3s;
-}
-.btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px #22c55e;
 }
 
-/* POPUP */
+/* popup */
 .popup{
   display:none;
   position:fixed;
@@ -134,36 +83,18 @@ body::before{
 
 .box{
   background:#1e293b;
-  padding:25px;
-  border-radius:12px;
+  padding:20px;
   width:500px;
   max-height:80vh;
   overflow-y:auto;
-  animation:pop 0.3s;
+  border-radius:10px;
 }
 
-@keyframes pop{
-  from{transform:scale(0.8);}
-  to{transform:scale(1);}
-}
-
-.box h3{
-  color:#22c55e;
-}
-
-/* SNOW */
-#snow{
-  position:fixed;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-}
+.box h3{color:#22c55e;}
 </style>
 </head>
 
 <body>
-
-<canvas id="snow"></canvas>
 
 <!-- NAV -->
 <div class="navbar">
@@ -181,42 +112,25 @@ body::before{
 
 <div class="card">
 <img src="prime.png">
-<h3>⭐ Prime ₹119</h3>
-<button class="btn" onclick="playClick(); openRank('Prime')">View</button>
+<h3>Prime ₹119</h3>
+<button class="btn" onclick="openRank('Prime')">View</button>
+<button class="btn">Buy</button>
 </div>
 
 <div class="card">
 <img src="mythic.png">
-<h3>🔥 Mythic ₹249</h3>
-<button class="btn" onclick="playClick(); openRank('Mythic')">View</button>
+<h3>Mythic ₹249</h3>
+<button class="btn" onclick="openRank('Mythic')">View</button>
+<button class="btn">Buy</button>
 </div>
 
 <div class="card">
 <img src="leorix.png">
-<h3>👑 Leorix+ ₹499</h3>
-<button class="btn" onclick="playClick(); openRank('Leorix')">View</button>
+<h3>Leorix+ ₹499</h3>
+<button class="btn" onclick="openRank('Leorix')">View</button>
+<button class="btn">Buy</button>
 </div>
 
-</div>
-</div>
-
-<!-- COINS -->
-<div id="coins" class="section">
-<div class="container">
-<div class="card"><img src="coin1.png"><h3>400 Coins</h3><p>₹99</p><button class="btn" onclick="playClick()">Buy</button></div>
-<div class="card"><img src="coin2.png"><h3>900 Coins</h3><p>₹199</p><button class="btn" onclick="playClick()">Buy</button></div>
-<div class="card"><img src="coin3.png"><h3>1500 Coins</h3><p>₹299</p><button class="btn" onclick="playClick()">Buy</button></div>
-<div class="card"><img src="coin4.png"><h3>2000 Coins</h3><p>₹399</p><button class="btn" onclick="playClick()">Buy</button></div>
-<div class="card"><img src="coin5.png"><h3>2700 Coins</h3><p>₹499</p><button class="btn" onclick="playClick()">Buy</button></div>
-</div>
-</div>
-
-<!-- TAGS -->
-<div id="tags" class="section">
-<div class="container">
-<div class="card"><img src="toy.png"><h3>TOY</h3><p>200 Coins</p></div>
-<div class="card"><img src="meow.png"><h3>MEOW</h3><p>300 Coins</p></div>
-<div class="card"><img src="deadly.png"><h3>DEADLY</h3><p>500 Coins</p></div>
 </div>
 </div>
 
@@ -229,16 +143,7 @@ body::before{
 </div>
 </div>
 
-<audio id="clickSound" src="click.mp3"></audio>
-
 <script>
-
-/* sound */
-function playClick(){
-  let s=document.getElementById("clickSound");
-  s.currentTime=0;
-  s.play().catch(()=>{});
-}
 
 /* nav */
 function show(id){
@@ -246,54 +151,98 @@ function show(id){
   document.getElementById(id).classList.add('active');
 }
 
-/* ranks FULL DATA */
+/* FULL DATA (YOUR EXACT TEXT) */
 function openRank(name){
   popup.style.display="flex";
 
   if(name==="Prime"){
-    title.innerText="⭐ PRIME - ₹119";
-    content.innerHTML=`✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 3<br><br>Diamond Armour (Protection IV)<br>Diamond Sword (Sharpness III)<br>Diamond Pickaxe (Efficiency V)<br>Diamond Axe (Efficiency V)<br>Trident (Mending)<br>Mace (Mending)<br>Crossbow (QuickCharge, Multishot)<br>Enchanting x64<br>Golden Apples + Totems`;
+    title.innerText="PRIME ₹119";
+    content.innerHTML=`
+✔ /sit<br>
+✔ /ec<br>
+✔ /pv 1<br>
+✔ /home 3<br><br>
+
+Diamond Armour (Protection IV)<br>
+Diamond Sword (Sharpness III)<br>
+Diamond Pickaxe (Efficiency V)<br>
+Diamond Axe (Efficiency V)<br>
+Trident (Mending)<br>
+Mace(Mending)<br>
+Crossbow (QuickCharge, Multishot)<br>
+Bottle Of Enchanting (x64)<br>
+Golden Carrot (x32)<br>
+Golden Apple (x32)<br>
+Enchanted Golden Apple (x10)<br>
+EnderPearl (x16)<br>
+Respawn Anchor (x16)<br>
+GlowStone (x16)<br>
+Obsidian (x16)<br>
+Crystal (x16)<br>
+Totem (x2)
+`;
   }
 
   if(name==="Mythic"){
-    title.innerText="🔥 MYTHIC - ₹249";
-    content.innerHTML=`✔ /sit<br>✔ /ec<br>✔ /pv 1<br>✔ /home 5<br><br>Full Netherite Set + Crystals + Totems`;
+    title.innerText="MYTHIC ₹249";
+    content.innerHTML=`
+✔ /sit<br>
+✔ /ec<br>
+✔ /pv 1<br>
+✔ /home 5<br><br>
+
+Netherite Armour (Protection IV, Swift Sneak III, Soul Speed III)<br>
+Netherite Sword (Maxed)<br>
+Netherite Pickaxe (Silk Touch)<br>
+Netherite Axe (Maxed)<br>
+Trident (Riptide III)<br>
+Mace (Wind Burst II)<br>
+Crossbow (QuickCharge, Multishot)<br>
+Bow (Infinity, Mending)<br>
+Golden Carrot (x32)<br>
+Golden Apple (x64)<br>
+Enchanted Golden Apple (x10)<br>
+EnderPearl (x16)<br>
+Respawn Anchor (x32)<br>
+GlowStone (x32)<br>
+Obsidian (x32)<br>
+Crystal (x32)<br>
+Totem (x2)
+`;
   }
 
   if(name==="Leorix"){
-    title.innerText="👑 LEORIX+ - ₹499";
-    content.innerHTML=`✔ /pv 1<br>✔ /ec<br>✔ /craft<br>✔ /home 7<br><br>MAX Netherite + OP Loot`;
+    title.innerText="LEORIX+ ₹499";
+    content.innerHTML=`
+✔ /pv 1<br>
+✔ /ec<br>
+✔ /craft<br>
+✔ /home 7<br><br>
+
+Netherite Armour (Protection VI, Swift Sneak III, Soul Speed III)<br>
+Netherite Sword (Maxed)<br>
+Netherite Pickaxe (Silk Touch)<br>
+Netherite Axe (Maxed)<br>
+Trident (Riptide III)<br>
+Mace (Wind Burst III)<br>
+Crossbow (QuickCharge, Multishot)<br>
+Bow (Infinity, Mending)<br>
+Golden Carrot (x64)<br>
+Golden Apple (x64)<br>
+Enchanted Golden Apple (x15)<br>
+EnderPearl (x16)<br>
+Respawn Anchor (x64)<br>
+GlowStone (x64)<br>
+Obsidian (x64)<br>
+Crystal (x64)<br>
+Totem (x2)
+`;
   }
 }
 
 function closePopup(){
   popup.style.display="none";
 }
-
-/* snow */
-const c=document.getElementById("snow");
-const ctx=c.getContext("2d");
-c.width=window.innerWidth;
-c.height=window.innerHeight;
-
-let snow=[];
-for(let i=0;i<120;i++){
-  snow.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*3});
-}
-
-function draw(){
-  ctx.clearRect(0,0,c.width,c.height);
-  ctx.fillStyle="white";
-  snow.forEach(s=>{
-    ctx.beginPath();
-    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fill();
-    s.y+=1;
-    if(s.y>c.height)s.y=0;
-  });
-  requestAnimationFrame(draw);
-}
-draw();
 
 </script>
 
