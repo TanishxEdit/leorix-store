@@ -8,22 +8,33 @@
 body {
   margin:0;
   font-family:Segoe UI;
-  background:linear-gradient(135deg,#020617,#0f172a);
   color:white;
   overflow-x:hidden;
+  transition:0.5s;
 }
 
-/* MOUSE GLOW */
-#cursorGlow {
+/* BACKGROUNDS */
+.home-bg { background:url('bg-home.jpg') center/cover fixed; }
+.coins-bg { background:url('bg-coins.jpg') center/cover fixed; }
+.tags-bg { background:url('bg-tags.jpg') center/cover fixed; }
+
+/* DARK OVERLAY */
+body::before {
+  content:"";
   position:fixed;
-  width:120px;
-  height:120px;
-  background:radial-gradient(circle, rgba(34,197,94,0.35), transparent);
-  border-radius:50%;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:-1;
+}
+
+/* SNOW */
+#snow {
+  position:fixed;
+  width:100%;
+  height:100%;
   pointer-events:none;
-  filter:blur(25px);
-  transform:translate(-50%,-50%);
-  z-index:9999;
+  z-index:1;
 }
 
 /* HERO */
@@ -35,10 +46,7 @@ body {
   align-items:center;
 }
 
-.logo {
-  width:200px;
-  filter:drop-shadow(0 0 20px #22c55e);
-}
+.logo { width:200px; }
 
 .enter {
   margin-top:20px;
@@ -47,23 +55,13 @@ body {
   border:none;
   border-radius:10px;
   cursor:pointer;
-  transition:0.3s;
-}
-
-.enter:hover {
-  transform:scale(1.1);
-  box-shadow:0 0 20px #22c55e;
 }
 
 /* STORE */
 #store { display:none; padding:30px; }
 
 /* NAV */
-.nav {
-  text-align:center;
-  margin-bottom:30px;
-}
-
+.nav { text-align:center; margin-bottom:30px; }
 .nav button {
   margin:0 15px;
   background:none;
@@ -71,10 +69,6 @@ body {
   color:white;
   font-size:18px;
   cursor:pointer;
-}
-
-.nav button:hover {
-  color:#22c55e;
 }
 
 /* CARDS */
@@ -90,25 +84,11 @@ body {
   padding:20px;
   border-radius:20px;
   width:260px;
-  transition:0.3s;
   text-align:center;
 }
 
-.card:hover {
-  transform:translateY(-10px) scale(1.05);
-  box-shadow:0 0 25px #22c55e;
-}
+img { width:100%; border-radius:12px; }
 
-.popular {
-  border:2px solid gold;
-}
-
-img {
-  width:100%;
-  border-radius:12px;
-}
-
-/* BUTTON */
 .buy {
   margin-top:10px;
   padding:12px;
@@ -119,7 +99,7 @@ img {
   cursor:pointer;
 }
 
-/* POPUPS */
+/* POPUP */
 .popup {
   display:none;
   position:fixed;
@@ -134,31 +114,24 @@ img {
   background:#1e293b;
   padding:25px;
   border-radius:15px;
-  width:450px;
-  max-height:80%;
-  overflow:auto;
+  width:500px;
+  max-height:80vh;
+  overflow-y:auto;
 }
 
 h3 { color:#22c55e; }
-
-input {
-  width:100%;
-  padding:10px;
-  border-radius:10px;
-  border:none;
-}
 </style>
 </head>
 
-<body>
+<body class="home-bg">
 
-<div id="cursorGlow"></div>
+<canvas id="snow"></canvas>
 
 <!-- HERO -->
 <div class="hero">
   <img src="logo.png" class="logo">
   <h1>LEORIXMC STORE</h1>
-  <button class="enter" onclick="playClick(); enterStore()">ENTER STORE</button>
+  <button class="enter" onclick="enterStore()">ENTER STORE</button>
 </div>
 
 <!-- STORE -->
@@ -177,19 +150,19 @@ input {
 <div class="card">
 <img src="prime.png">
 <h3>Prime ₹119</h3>
-<button class="buy" onclick="playClick(); openRank('Prime')">View</button>
+<button class="buy" onclick="openRank('Prime')">View</button>
 </div>
 
-<div class="card popular">
+<div class="card">
 <img src="mythic.png">
-<h3>Mythic ₹249 ⭐</h3>
-<button class="buy" onclick="playClick(); openRank('Mythic')">View</button>
+<h3>Mythic ₹249</h3>
+<button class="buy" onclick="openRank('Mythic')">View</button>
 </div>
 
 <div class="card">
 <img src="leorix.png">
-<h3>Leorix+ ₹499 👑</h3>
-<button class="buy" onclick="playClick(); openRank('Leorix')">View</button>
+<h3>Leorix+ ₹499</h3>
+<button class="buy" onclick="openRank('Leorix')">View</button>
 </div>
 
 </div>
@@ -198,125 +171,100 @@ input {
 <!-- COINS -->
 <div id="coins" style="display:none;">
 <div class="container">
-
-<div class="card"><img src="coin1.png"><h3>400 Coins</h3><p>₹99</p><button class="buy" onclick="playClick(); openBuy()">Buy</button></div>
-<div class="card popular"><img src="coin2.png"><h3>900 Coins ⭐</h3><p>₹199</p><button class="buy" onclick="playClick(); openBuy()">Buy</button></div>
-<div class="card"><img src="coin3.png"><h3>1500 Coins</h3><p>₹299</p><button class="buy" onclick="playClick(); openBuy()">Buy</button></div>
-<div class="card"><img src="coin4.png"><h3>2000 Coins</h3><p>₹399</p><button class="buy" onclick="playClick(); openBuy()">Buy</button></div>
-<div class="card"><img src="coin5.png"><h3>2700 Coins</h3><p>₹499</p><button class="buy" onclick="playClick(); openBuy()">Buy</button></div>
-
+<div class="card"><img src="coin1.png"><h3>400 Coins</h3><p>₹99</p></div>
+<div class="card"><img src="coin2.png"><h3>900 Coins</h3><p>₹199</p></div>
+<div class="card"><img src="coin3.png"><h3>1500 Coins</h3><p>₹299</p></div>
+<div class="card"><img src="coin4.png"><h3>2000 Coins</h3><p>₹399</p></div>
+<div class="card"><img src="coin5.png"><h3>2700 Coins</h3><p>₹499</p></div>
 </div>
 </div>
 
 <!-- TAGS -->
 <div id="tags" style="display:none;">
 <div class="container">
-
-<div class="card"><img src="toy.png"><h3>TOY</h3><p>200 Coins</p><button class="buy" onclick="playClick(); openBuy()">Buy</button></div>
-<div class="card"><img src="meow.png"><h3>MEOW</h3><p>300 Coins</p><button class="buy" onclick="playClick(); openBuy()">Buy</button></div>
-<div class="card popular"><img src="deadly.png"><h3>DEADLY</h3><p>500 Coins</p><button class="buy" onclick="playClick(); openBuy()">Buy</button></div>
-
+<div class="card"><img src="toy.png"><h3>TOY</h3><p>200 Coins</p></div>
+<div class="card"><img src="meow.png"><h3>MEOW</h3><p>300 Coins</p></div>
+<div class="card"><img src="deadly.png"><h3>DEADLY</h3><p>500 Coins</p></div>
 </div>
 </div>
 
 </div>
 
-<!-- RANK POPUP -->
+<!-- POPUP -->
 <div id="rankPopup" class="popup">
 <div class="box">
 <h2 id="rankTitle"></h2>
 <div id="rankDetails"></div>
-<button class="buy" onclick="playClick(); openCheckout()">Buy</button>
 <button class="buy" onclick="closeRank()">Close</button>
 </div>
 </div>
 
-<!-- CHECKOUT -->
-<div id="checkoutPopup" class="popup">
-<div class="box">
-<h2>Enter Username</h2>
-<input id="userInput"><br><br>
-<button class="buy" onclick="playClick(); confirmBuy()">Continue</button>
-</div>
-</div>
-
-<!-- CLICK SOUND -->
-<audio id="clickSound" src="click.mp3"></audio>
-
 <script>
 
-/* SOUND */
-function playClick(){
-  let s=document.getElementById("clickSound");
-  s.currentTime=0;
-  s.play();
+/* SWITCH TABS + BACKGROUND */
+function show(id){
+  ranks.style.display='none';
+  coins.style.display='none';
+  tags.style.display='none';
+
+  document.getElementById(id).style.display='block';
+
+  document.body.className = 
+    id==="coins" ? "coins-bg" :
+    id==="tags" ? "tags-bg" : "home-bg";
 }
 
-/* NAV */
 function enterStore(){
   document.querySelector('.hero').style.display='none';
-  document.getElementById('store').style.display='block';
+  store.style.display='block';
 }
 
-function show(id){
-  document.getElementById('ranks').style.display='none';
-  document.getElementById('coins').style.display='none';
-  document.getElementById('tags').style.display='none';
-  document.getElementById(id).style.display='block';
-}
-
-/* RANK POPUP */
+/* RANK DATA */
 function openRank(name){
   rankPopup.style.display="flex";
 
   if(name==="Prime"){
-    rankTitle.innerHTML="⭐ PRIME - ₹119";
-    rankDetails.innerHTML=`<h3>Perks</h3>/sit /ec /pv 1 /home 3
-    <h3>Kit</h3>Diamond Armour Prot IV<br>Sword Sharp III<br>Totems, Apples`;
+    rankTitle.innerHTML="PRIME ₹119";
+    rankDetails.innerHTML=`Diamond Armour Prot IV<br>Full starter kit`;
   }
 
   if(name==="Mythic"){
-    rankTitle.innerHTML="🔥 MYTHIC - ₹249";
-    rankDetails.innerHTML=`<h3>Perks</h3>/sit /ec /pv 1 /home 5
-    <h3>Kit</h3>Netherite Gear<br>Crystals, Totems`;
+    rankTitle.innerHTML="MYTHIC ₹249";
+    rankDetails.innerHTML=`Netherite kit + crystals`;
   }
 
   if(name==="Leorix"){
-    rankTitle.innerHTML="👑 LEORIX+ - ₹499";
-    rankDetails.innerHTML=`<h3>Perks</h3>/craft /home 7
-    <h3>Kit</h3>Max Gear<br>OP Loot`;
+    rankTitle.innerHTML="LEORIX+ ₹499";
+    rankDetails.innerHTML=`MAX gear + OP items`;
   }
 }
 
-function closeRank(){rankPopup.style.display="none";}
+function closeRank(){ rankPopup.style.display="none"; }
 
-/* BUY */
-function openBuy(){checkoutPopup.style.display="flex";}
-function openCheckout(){checkoutPopup.style.display="flex";}
+/* SNOW */
+const canvas=document.getElementById("snow");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-function confirmBuy(){
-  let user=userInput.value;
-  if(user===""){alert("Enter username");return;}
-  alert("Purchase successful!");
-  checkoutPopup.style.display="none";
+let snow=[];
+for(let i=0;i<100;i++){
+  snow.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*3});
 }
 
-/* MOUSE GLOW */
-const glow=document.getElementById("cursorGlow");
-let x=0,y=0,px=0,py=0;
-
-document.addEventListener("mousemove",(e)=>{
-  x=e.clientX;y=e.clientY;
-});
-
-function animate(){
-  px+=(x-px)*0.15;
-  py+=(y-py)*0.15;
-  glow.style.left=px+"px";
-  glow.style.top=py+"px";
-  requestAnimationFrame(animate);
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="white";
+  snow.forEach(s=>{
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fill();
+    s.y+=1;
+    if(s.y>canvas.height) s.y=0;
+  });
+  requestAnimationFrame(draw);
 }
-animate();
+draw();
 
 </script>
 
