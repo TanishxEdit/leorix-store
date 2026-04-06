@@ -20,8 +20,6 @@ body {
   font-weight:bold;
 }
 
-h1 { margin:20px; }
-
 .container {
   display:flex;
   flex-wrap:wrap;
@@ -51,7 +49,6 @@ h1 { margin:20px; }
 img {
   width:100%;
   border-radius:10px;
-  margin-bottom:10px;
 }
 
 button {
@@ -62,6 +59,7 @@ button {
   color:white;
   cursor:pointer;
   width:100%;
+  margin-top:10px;
 }
 
 button:hover {
@@ -172,17 +170,20 @@ input {
 <div class="container">
 
 <div class="card">
-<h3 style="color:yellow;">TOY</h3>
+<img src="toy.png">
+<h3>🧸 TOY</h3>
 <button onclick="playClick()">Buy</button>
 </div>
 
 <div class="card">
-<h3 style="color:pink;">MEOW</h3>
+<img src="meow.png">
+<h3>🐱 MEOW</h3>
 <button onclick="playClick()">Buy</button>
 </div>
 
 <div class="card popular">
-<h3 style="color:red;">DEADLY</h3>
+<img src="deadly.png">
+<h3>☠️ DEADLY</h3>
 <button onclick="playClick()">Buy</button>
 </div>
 
@@ -190,7 +191,6 @@ input {
 
 </div>
 
-<!-- SOUND -->
 <audio id="clickSound" src="click.mp3"></audio>
 
 <script>
